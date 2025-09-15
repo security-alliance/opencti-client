@@ -1,6 +1,6 @@
 {
     "name": "@security-alliance/opencti-client",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "description": "TypeScript client for interacting with OpenCTI",
     "keywords": [
         "opencti",
