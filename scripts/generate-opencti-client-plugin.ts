@@ -69,12 +69,13 @@ export class BaseOpenCTIClient {
     protected apiKey: string;
 
     constructor(host: string, apiKey: string) {
-        this.host = host.replace(/\\/$/, '');
+        const endpoint = new URL("/graphql", host);
+        this.host = endpoint.hostname
         this.apiKey = apiKey;
 
         this.client = new ApolloClient({
             link: createUploadLink({
-                uri: \`\${host}/graphql\`,
+                uri: endpoint.toString(),
                 headers: {
                     authorization: \`Bearer \${apiKey}\`,
                 },
