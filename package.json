@@ -31,28 +31,27 @@
         "prettier:fix": "npx prettier -w \"**/*.{js,ts,md,json,yml,yaml}\""
     },
     "dependencies": {
-        "@apollo/client": "^3.13.8",
+        "@apollo/client": "^4.0.5",
         "@blakeembrey/deque": "^1.0.5",
         "@security-alliance/stix": "^0.1.1",
-        "apollo-upload-client": "^18.0.1",
+        "apollo-upload-client": "^19.0.0",
         "eventsource": "^4.0.0",
         "fast-json-patch": "^3.1.1"
     },
     "devDependencies": {
-        "@graphql-codegen/cli": "^5.0.7",
-        "@graphql-codegen/plugin-helpers": "^5.1.1",
-        "@graphql-codegen/typescript": "^4.1.6",
-        "@graphql-codegen/visitor-plugin-common": "^5.8.0",
+        "@graphql-codegen/cli": "^6.0.0",
+        "@graphql-codegen/plugin-helpers": "^6.0.0",
+        "@graphql-codegen/typescript": "^5.0.0",
+        "@graphql-codegen/visitor-plugin-common": "^6.0.0",
         "@types/apollo-upload-client": "^18.0.0",
-        "@types/node": "^24.1.0",
-        "@types/uuid": "^10.0.0",
+        "@types/node": "^24.5.1",
         "graphql": "^16.11.0",
-        "mocha": "^11.7.1",
+        "mocha": "^11.7.2",
         "prettier": "^3.6.2",
-        "tsx": "^4.20.3",
-        "typescript": "^5.8.3",
-        "uuid": "^11.1.0",
-        "yaml": "^2.8.0"
+        "tsx": "^4.20.5",
+        "typescript": "^5.9.2",
+        "uuid": "^13.0.0",
+        "yaml": "^2.8.1"
     },
     "publishConfig": {
         "access": "public"

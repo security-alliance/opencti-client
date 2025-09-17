@@ -1,16 +1,16 @@
 import { getBaseType } from "@graphql-codegen/plugin-helpers";
+import * as TypescriptPlugin from "@graphql-codegen/typescript";
 import {
     GraphQLField,
     GraphQLObjectType,
-    isObjectType,
     GraphQLOutputType,
-    isUnionType,
     isCompositeType,
-    isScalarType,
     isEnumType,
+    isObjectType,
+    isScalarType,
+    isUnionType,
 } from "graphql";
 import { shouldIgnoreField, wrapTypeScriptType } from "./type-processor";
-import * as TypescriptPlugin from "@graphql-codegen/typescript";
 
 export class OperationProcessor {
     visitor: TypescriptPlugin.TsVisitor;
@@ -163,13 +163,13 @@ export class OperationProcessor {
         this.clientFunctions[functionName] =
             `    async ${functionName}(${metadata.typescriptFunctionParams}): Promise<${functionReturnType}> {
         const result = await this.client.${rootType === "Query" ? "query" : "mutate"}({
-            ${rootType === "Query" ? "query" : "mutation"}: ${documentName},
+            ${rootType === "Query" ? "query" : "mutation"}: this.getParsedDocument(documents['${documentName}']),
             variables: {
                 ${metadata.typescriptVariablesSpread}
             },
         });
 
-        return result.data.${fields.map((v) => v.name).join(".")};
+        return (result.data as any).${fields.map((v) => v.name).join(".")};
     }`;
 
         this.gqlDocuments[documentName] =

@@ -5,12 +5,8 @@ import {
     GraphQLField,
     GraphQLInterfaceType,
     GraphQLNamedType,
-    GraphQLNonNull,
     GraphQLObjectType,
-    GraphQLScalarType,
-    GraphQLString,
     GraphQLType,
-    GraphQLUnionType,
     isCompositeType,
     isEnumType,
     isEqualType,
@@ -78,7 +74,7 @@ const isEqualField = (a: GraphQLField<any, any>, b: GraphQLField<any, any>) => {
     return true;
 };
 
-export const wrapTypeScriptType = (type: GraphQLType, baseType: string, nullable = true) => {
+export const wrapTypeScriptType = (type: GraphQLType, baseType: string, nullable = true): string => {
     if (isNonNullType(type)) {
         return wrapTypeScriptType(type.ofType, baseType, false);
     }
