@@ -113,7 +113,7 @@ export class OpenCTIClient extends BaseOpenCTIClient {
     }
 
     public openStream(streamId: string, options?: Omit<OpenCTIStreamOptions, "authorization">): OpenCTIStream {
-        return new OpenCTIStream(new URL(`${this.host}/stream/${streamId}`), {
+        return new OpenCTIStream(new URL(`https://${this.host}/stream/${streamId}`), {
             ...options,
             authorization: this.apiKey,
         });
