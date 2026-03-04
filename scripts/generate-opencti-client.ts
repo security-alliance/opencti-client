@@ -25,10 +25,9 @@ import yaml from "yaml";
     console.log(`[+] generating client for opencti version ${packageJson["version"]}`);
 
     delete graphqlCodegen.generates["./graphql.schema.json"];
-    (graphqlCodegen.generates["src/generated/graphql.ts"] as Types.ConfiguredOutput).plugins = [
-        "typescript",
-        "opencti-client-generator",
-    ];
+    const outputConfig = graphqlCodegen.generates["src/generated/graphql.ts"] as Types.ConfiguredOutput;
+    outputConfig.plugins = ["typescript", "opencti-client-generator"];
+    outputConfig.config = { ...outputConfig.config, jsonOutputDir: path.join(cwd, "src", "generated") };
 
     graphqlCodegen.pluginLoader = async (name: string): Promise<CodegenPlugin> => {
         if (name === "@graphql-codegen/typescript") return typescriptPlugin;

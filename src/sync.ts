@@ -1,74 +1,58 @@
-// https://github.com/OpenCTI-Platform/client-python/blob/master/pycti/connector/opencti_connector_helper.py
+/*
+opencti stream implementation is stupid and is impossible to consistently sync from
+- there are two parameters, from and recovery
+- syncing loads everything up to recovery from elasticsearch, then everything from recovery
+  to from (if from > recovery) from redis. if from < recovery, then it skips elasticsearch
+- recovery loads the entire state of the world and sends synthetic create events
+- redis loads deltas, including updates/deletes, as patches
+- there is no mechanism to ensure consistency between redis and elasticsearch
+- if a filter changes, the entire state of the world may change
 
-import { Deque } from "@blakeembrey/deque";
+the design choice we have made here is to use recovery for the initial sync, and then trust
+redis for incremental updates. on reconnection, we check whether our cursor is still within
+the redis stream (via firstEventId from the server's connected event). if redis has been
+trimmed past our position, we automatically trigger a full resync. this is because recovery
+doesn't send delete events, so once we are outside redis stream range we can no longer guarantee
+consistency without a full resync
+*/
+
 import { Identifier, StixObject, StixObjectType, StixObjectTypeMap } from "@security-alliance/stix/2.1";
 import EventEmitter from "events";
 import { ErrorEvent, EventSource, EventSourceFetchInit } from "eventsource";
-import { Operation } from "fast-json-patch";
 import { readFile, rename, writeFile } from "fs/promises";
 import { sleep } from "./utils.js";
 
-export type UserEventOrigin = {
-    socket: string;
-    ip: string;
-    user_id: string;
-    group_ids: string[];
-    organization_ids: string[];
-    user_metadata: Record<string, any>;
-};
+export type {
+    CreateEvent,
+    DeleteEvent,
+    EventOrigin,
+    MergeEvent,
+    OpenCTIStreamOptions,
+    OpenCTIStreamStateManager,
+    ReadyState,
+    ReadyStateChangeEvent,
+    StateUpdateEvent,
+    StreamInfo,
+    UpdateEvent,
+    UpdateType,
+} from "./sync.types.js";
 
-export type SyntheticEventOrigin = {
-    referer: string;
-};
+import type {
+    CreateEvent,
+    DeleteEvent,
+    MergeEvent,
+    OpenCTIStreamOptions,
+    OpenCTIStreamStateManager,
+    ReadyState,
+    ReadyStateChangeEvent,
+    StateUpdateEvent,
+    StreamInfo,
+    UpdateEvent,
+    UpdateType,
+} from "./sync.types.js";
+import { randomUUID } from "crypto";
 
-export type EventOrigin = UserEventOrigin | SyntheticEventOrigin;
-
-export type CreateStreamEvent = {
-    data: StixObject;
-    message: string;
-    origin: EventOrigin;
-};
-
-export type UpdateStreamEvent = {
-    data: StixObject;
-    message: string;
-    origin: EventOrigin;
-    context: {
-        patch: Operation[];
-        reverse_patch: Operation[];
-    };
-};
-
-export type DeleteStreamEvent = {
-    data: StixObject;
-    message: string;
-    origin: EventOrigin;
-};
-
-export type MergeStreamEvent = unknown;
-
-export type ReconnectingStreamEvent = {
-    reason: string;
-};
-
-export type ConnectedStreamEvent = {
-    lastEventId: string;
-    firstEventId: string;
-    firstEventDate: string;
-    lastEventDate: string;
-    streamSize: number;
-    connectionId: string;
-};
-
-export type UpdateType = "heartbeat" | "create" | "update" | "delete" | "merge";
-
-export type StateUpdateEvent = {
-    lastEventId: string;
-    updateType: UpdateType;
-    body: any;
-};
-
-export const isValidUpdateType = (updateType: string): updateType is UpdateType => {
+const isValidUpdateType = (updateType: string): updateType is UpdateType => {
     return (
         updateType === "heartbeat" ||
         updateType === "create" ||
@@ -97,26 +81,12 @@ const compareEventIds = (a: string, b: string): -1 | 0 | 1 => {
     return 0;
 };
 
-export interface OpenCTIStreamStateManager {
-    initialize(): Promise<void>;
-
-    getLastEventId(): string;
-    getRecoverUntil(): string;
-
-    getObjects(): Record<Identifier, StixObject>;
-    getObject<T extends StixObjectType>(id: Identifier<T>): StixObjectTypeMap[T] | undefined;
-
-    commitChanges(events: StateUpdateEvent[]): Promise<void>;
-}
-
 export class InMemoryOpenCTIStreamStateManager implements OpenCTIStreamStateManager {
     protected lastEventId: string;
-    protected recoverUntil: string;
     protected objects: Record<Identifier, StixObject>;
 
     constructor() {
         this.lastEventId = "0-0";
-        this.recoverUntil = new Date().toISOString();
         this.objects = {};
     }
 
@@ -124,10 +94,6 @@ export class InMemoryOpenCTIStreamStateManager implements OpenCTIStreamStateMana
 
     getLastEventId(): string {
         return this.lastEventId;
-    }
-
-    getRecoverUntil(): string {
-        return this.recoverUntil;
     }
 
     getObjects(): Record<string, StixObject> {
@@ -138,24 +104,33 @@ export class InMemoryOpenCTIStreamStateManager implements OpenCTIStreamStateMana
         return this.objects[id] as StixObjectTypeMap[T];
     }
 
-    async commitChanges(events: StateUpdateEvent[]): Promise<void> {
+    async updateState(events: StateUpdateEvent[]): Promise<void> {
         if (events.length === 0) return;
 
         for (const event of events) {
             switch (event.updateType) {
                 case "create":
                 case "update":
-                    const createUpdateData = event.body["data"];
-                    this.objects[createUpdateData["id"]] = createUpdateData;
+                case "merge":
+                    this.objects[event.body.data.id] = event.body.data;
+                    if (event.updateType === "merge") {
+                        for (const source of event.body.context.sources) {
+                            delete this.objects[source.id];
+                        }
+                    }
                     break;
                 case "delete":
-                    const deleteData = event.body["data"];
-                    delete this.objects[deleteData["id"]];
+                    delete this.objects[event.body.data.id];
                     break;
             }
         }
 
         this.lastEventId = events[events.length - 1].lastEventId;
+    }
+
+    async replaceState(objects: Record<Identifier, StixObject>, lastEventId: string): Promise<void> {
+        this.objects = objects;
+        this.lastEventId = lastEventId;
     }
 }
 
@@ -163,7 +138,7 @@ export class FilesystemOpenCTIStreamStateManager extends InMemoryOpenCTIStreamSt
     private path: string;
     private commitFrequency: number;
 
-    private committing = false;
+    private commitChain: Promise<void> = Promise.resolve();
     private changes = 0;
     private lastCommittedTime = Date.now();
 
@@ -179,123 +154,149 @@ export class FilesystemOpenCTIStreamStateManager extends InMemoryOpenCTIStreamSt
             const data = JSON.parse(await readFile(this.path, "utf-8"));
 
             this.lastEventId = data["lastEventId"];
-            this.recoverUntil = data["recoverUntil"];
             this.objects = data["objects"];
         } catch (e: any) {
-            if (e.code !== "ENOENT") {
-                throw e;
-            }
+            if (e.code !== "ENOENT") throw e;
         }
     }
 
-    async commitChanges(events: StateUpdateEvent[]): Promise<void> {
-        if (Date.now() - this.lastCommittedTime > this.commitFrequency && this.changes > 0 && !this.committing) {
-            try {
-                this.committing = true;
-                this.changes = 0;
-
-                const payload = {
-                    lastEventId: this.lastEventId,
-                    recoverUntil: this.recoverUntil,
-                    objects: this.objects,
-                };
-
-                const tempFile = `${this.path}.tmp`;
-                await writeFile(tempFile, JSON.stringify(payload, undefined, 2), "utf-8");
-                await rename(tempFile, this.path);
-
-                this.lastCommittedTime = Date.now();
-            } finally {
-                this.committing = false;
-            }
-        }
-
-        super.commitChanges(events);
+    async updateState(events: StateUpdateEvent[]): Promise<void> {
+        await super.updateState(events);
         this.changes += events.length;
+
+        if (Date.now() - this.lastCommittedTime > this.commitFrequency && this.changes > 0) {
+            await this.commitState();
+        }
+    }
+
+    async replaceState(objects: Record<Identifier, StixObject>, lastEventId: string): Promise<void> {
+        await super.replaceState(objects, lastEventId);
+
+        await this.commitState();
+    }
+
+    private commitState(): Promise<void> {
+        this.changes = 0;
+
+        const data = JSON.stringify({ lastEventId: this.lastEventId, objects: this.objects }, undefined, 2);
+        const tempFile = `${this.path}.${randomUUID()}.tmp`;
+
+        this.commitChain = this.commitChain
+            .catch(() => {})
+            .then(async () => {
+                await writeFile(tempFile, data, "utf-8");
+                await rename(tempFile, this.path);
+                this.lastCommittedTime = Date.now();
+            });
+
+        return this.commitChain;
     }
 }
 
-export type OpenCTIStreamOptions = {
-    signal?: AbortSignal;
-    state?: OpenCTIStreamStateManager;
-    noDependencies?: boolean;
-    noDelete?: boolean;
-    withInferences?: boolean;
-
-    authorization?: string;
-};
+const MAX_RECONNECT_DELAY = 60_000;
+const INITIAL_RECONNECT_DELAY = 1_000;
+const LIVENESS_CHECK_INTERVAL = 30_000;
 
 export class OpenCTIStream extends EventEmitter<{
-    create: [CreateStreamEvent];
-    update: [UpdateStreamEvent];
-    delete: [DeleteStreamEvent];
-    merge: [MergeStreamEvent];
-    connected: [ConnectedStreamEvent];
+    create: [CreateEvent];
+    update: [UpdateEvent];
+    delete: [DeleteEvent];
+    merge: [MergeEvent];
 
-    ready: [];
+    readystatechange: [ReadyStateChangeEvent];
     error: [ErrorEvent];
-    closed: [];
+    connectionError: [ErrorEvent];
 }> {
-    stream: URL;
-    noDependencies: boolean;
-    noDelete: boolean;
-    withInferences: boolean;
-    authorization: string | undefined;
+    private stream: URL;
+    private noDependencies: boolean;
+    private noDelete: boolean;
+    private withInferences: boolean;
+    private authorization: string | undefined;
 
-    state: OpenCTIStreamStateManager;
+    private state: OpenCTIStreamStateManager;
 
-    signal: AbortSignal | undefined;
+    private signal: AbortSignal | undefined;
 
-    started: boolean;
-    ready: boolean;
+    private _readyState: ReadyState;
 
-    eventSource: EventSource | undefined;
+    private eventSource: EventSource | undefined;
 
-    connectionId: string | undefined;
-    initialLastEventId: string | undefined;
+    private streamInfo: StreamInfo | undefined;
 
-    livenessChecker: NodeJS.Timeout | undefined;
+    private livenessChecker: NodeJS.Timeout | undefined;
 
-    eventQueue: Deque<StateUpdateEvent>;
+    private reconnectDelay: number;
+
+    private pendingEvents: StateUpdateEvent[] = [];
+    private processing = false;
 
     constructor(stream: URL, options?: OpenCTIStreamOptions) {
         super();
 
         this.stream = stream;
         this.noDependencies = options?.noDependencies !== undefined ? options.noDependencies : false;
-        this.noDelete = options?.noDelete !== undefined ? options.noDelete : true;
+        this.noDelete = options?.noDelete !== undefined ? options.noDelete : false;
         this.withInferences = options?.withInferences !== undefined ? options.withInferences : false;
         this.authorization = options?.authorization;
 
         this.state = options?.state || new InMemoryOpenCTIStreamStateManager();
         this.signal = options?.signal;
 
-        this.signal?.addEventListener("abort", () => {
-            this.stop();
-        });
+        this.signal?.addEventListener("abort", () => this.stop());
 
-        this.started = false;
-        this.ready = false;
+        this._readyState = "idle";
 
-        this.eventQueue = new Deque();
-
-        this.startEventWorker();
+        this.reconnectDelay = INITIAL_RECONNECT_DELAY;
     }
 
-    public getState(): Record<string, StixObject> {
+    get readyState(): ReadyState {
+        return this._readyState;
+    }
+
+    get stateObjects(): Record<string, StixObject> {
         return this.state.getObjects();
     }
 
     public async start() {
-        // if already started, abort
-        if (this.started) return;
-        this.started = true;
+        if (this._readyState !== "idle") return;
 
-        // initialize, this should only happen once
         await this.state.initialize();
 
-        // the signal could have aborted in the meantime, check
-        if (this.signal?.aborted) return;
+        this.createEventSource("starting");
+    }
+
+    public stop() {
+        if (this._readyState === "stopped") return;
+        this._readyState = "stopped";
+
+        clearInterval(this.livenessChecker);
+        this.eventSource?.close();
+        this.emit("readystatechange", { readyState: "stopped" });
+    }
+
+    public async resync(): Promise<void> {
+        if (this._readyState === "stopped") return;
+
+        this.teardownEventSource();
+        await this.resetState("resync");
+    }
+
+    private teardownEventSource() {
+        clearInterval(this.livenessChecker);
+        this.eventSource?.close();
+        this.pendingEvents = [];
+    }
+
+    private async resetState(reason: string): Promise<void> {
+        await this.state.replaceState({}, "0-0");
+        this.createEventSource(reason);
+    }
+
+    private createEventSource(reason: string) {
+        if (this._readyState === "stopped") return;
+
+        this._readyState = "connecting";
+        this.emit("readystatechange", { readyState: "connecting", reason: reason });
 
         const eventSource = new EventSource(new URL("invalid://"), {
             fetch: async (_: string | URL, init: EventSourceFetchInit) => {
@@ -308,18 +309,39 @@ export class OpenCTIStream extends EventEmitter<{
         });
 
         eventSource.addEventListener("error", (e) => {
-            this.emit("error", e);
+            this.emit("connectionError", e);
         });
 
-        eventSource.addEventListener("connected", (e) => {
-            const body = JSON.parse(e.data) as ConnectedStreamEvent;
+        eventSource.addEventListener("connected", async (e) => {
+            const body = JSON.parse(e.data) as StreamInfo;
 
-            this.connectionId = body.connectionId;
-            this.initialLastEventId = body.lastEventId;
+            this.streamInfo = body;
+            this.reconnectDelay = INITIAL_RECONNECT_DELAY;
 
-            this.emit("connected", body);
+            const lastEventId = this.state.getLastEventId();
+            const isInitialSync = lastEventId === "0-0";
+            const hasGap = !isInitialSync && compareEventIds(lastEventId, body.firstEventId) === 1;
 
-            this.tryMarkReady(this.state.getLastEventId());
+            if (isInitialSync || hasGap) {
+                this._readyState = "syncing";
+                this.emit("readystatechange", { readyState: "syncing", info: body });
+
+                if (hasGap) {
+                    this.teardownEventSource();
+                    try {
+                        await this.resetState("gap detected");
+                    } catch (err: any) {
+                        this.emit(
+                            "error",
+                            new ErrorEvent("error", { message: `gap resync failed: ${err?.message ?? err}` }),
+                        );
+                        this.stop();
+                    }
+                    return;
+                }
+            }
+
+            this.tryMarkReady(lastEventId);
         });
 
         const handleEvent = (event: MessageEvent) => {
@@ -329,11 +351,12 @@ export class OpenCTIStream extends EventEmitter<{
                 return;
             }
 
-            this.eventQueue.push({
+            this.pendingEvents.push({
                 lastEventId: event.lastEventId,
                 updateType: updateType,
                 body: JSON.parse(event.data),
             });
+            if (!this.processing) this.processQueue();
         };
 
         eventSource.addEventListener("heartbeat", handleEvent);
@@ -344,72 +367,46 @@ export class OpenCTIStream extends EventEmitter<{
 
         this.eventSource = eventSource;
 
+        clearInterval(this.livenessChecker);
         this.livenessChecker = setInterval(() => {
             if (eventSource.readyState !== EventSource.CLOSED) return;
 
-            this.emit("error", new ErrorEvent("error", { message: "liveness checker detected closed event source" }));
-
-            this.stop();
-        }, 1000 * 60);
+            this.reconnect("liveness checker detected closed event source");
+        }, LIVENESS_CHECK_INTERVAL);
     }
 
-    private stop() {
-        clearInterval(this.livenessChecker);
-        this.eventSource?.close();
-        this.emit("closed");
+    private async reconnect(reason: string) {
+        if (this._readyState === "stopped") return;
+
+        this.teardownEventSource();
+
+        const delay = this.reconnectDelay;
+        this.reconnectDelay = Math.min(this.reconnectDelay * 2, MAX_RECONNECT_DELAY);
+
+        await sleep(delay, this.signal);
+
+        this.createEventSource(reason);
     }
 
-    private async startEventWorker() {
-        while (!this.signal?.aborted) {
-            if (this.eventQueue.size === 0) {
-                await sleep(10, this.signal);
-                continue;
-            }
-
-            const events = Array.from(this.eventQueue.entries());
-            this.eventQueue.clear();
+    private async processQueue() {
+        this.processing = true;
+        while (this.pendingEvents.length > 0) {
+            const events = this.pendingEvents;
+            this.pendingEvents = [];
 
             try {
-                await this.state.commitChanges(events);
+                await this.state.updateState(events);
             } catch (e: any) {
                 this.emit("error", new ErrorEvent("error", { message: `failed to commit changes: ${e.toString()}` }));
                 this.stop();
                 return;
             }
 
-            for (const event of events) {
-                switch (event.updateType) {
-                    case "create":
-                        this.emit("create", {
-                            data: event.body.data,
-                            origin: event.body.origin,
-                            message: event.body.message,
-                        });
-                        break;
-                    case "update":
-                        this.emit("update", {
-                            data: event.body.data,
-                            origin: event.body.origin,
-                            message: event.body.message,
-                            context: event.body.context,
-                        });
-                        break;
-                    case "delete":
-                        this.emit("delete", {
-                            data: event.body.data,
-                            origin: event.body.origin,
-                            message: event.body.message,
-                        });
-                        break;
-                    case "merge":
-                        this.emit("merge", event.body);
-                        break;
-                }
-            }
+            for (const event of events) if (event.updateType !== "heartbeat") this.emit(event.updateType, event.body);
 
-            const latestEvent = events[events.length - 1];
-            this.tryMarkReady(latestEvent.lastEventId);
+            this.tryMarkReady(events[events.length - 1].lastEventId);
         }
+        this.processing = false;
     }
 
     private constructStreamUrl(): string {
@@ -422,17 +419,17 @@ export class OpenCTIStream extends EventEmitter<{
         streamUrl.searchParams.set("no-dependencies", this.noDependencies ? "true" : "false");
         streamUrl.searchParams.set("listen-delete", this.noDelete ? "false" : "true");
         streamUrl.searchParams.set("with-inferences", this.withInferences ? "true" : "false");
-        streamUrl.searchParams.set("recover", this.state.getRecoverUntil());
+        if (lastEventId === "0-0") streamUrl.searchParams.set("recover", new Date().toISOString());
 
         return streamUrl.toString();
     }
 
     private tryMarkReady(lastEventId: string) {
-        if (this.ready) return;
+        if (this._readyState !== "connecting" && this._readyState !== "syncing") return;
 
-        if (compareEventIds(lastEventId, this.initialLastEventId!) !== -1) return;
+        if (compareEventIds(lastEventId, this.streamInfo!.lastEventId!) === 1) return;
 
-        this.ready = true;
-        this.emit("ready");
+        this._readyState = "ready";
+        this.emit("readystatechange", { readyState: "ready" });
     }
 }

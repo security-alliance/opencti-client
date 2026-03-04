@@ -1,6 +1,6 @@
 {
     "name": "@security-alliance/opencti-client",
-    "version": "0.3.3",
+    "version": "0.4.0",
     "description": "TypeScript client for interacting with OpenCTI",
     "keywords": [
         "opencti",
@@ -23,7 +23,7 @@
     },
     "repository": "github:security-alliance/opencti-client",
     "scripts": {
-        "build": "rm -rf dist/; tsc -p tsconfig.release.json",
+        "build": "rm -rf dist/; tsc -p tsconfig.release.json && cp src/generated/metadata.json src/generated/strings.bin dist/generated/",
         "test": "mocha",
         "generate": "node --import tsx scripts/generate-opencti-client.ts",
         "prepublishOnly": "pnpm run build",
@@ -31,27 +31,23 @@
         "prettier:fix": "npx prettier -w \"**/*.{js,ts,md,json,yml,yaml}\""
     },
     "dependencies": {
-        "@apollo/client": "^4.0.5",
-        "@blakeembrey/deque": "^1.0.5",
         "@security-alliance/stix": "^0.1.1",
-        "apollo-upload-client": "^19.0.0",
-        "eventsource": "^4.0.0",
+        "eventsource": "^4.1.0",
         "fast-json-patch": "^3.1.1"
     },
     "devDependencies": {
-        "@graphql-codegen/cli": "^6.0.0",
-        "@graphql-codegen/plugin-helpers": "^6.0.0",
-        "@graphql-codegen/typescript": "^5.0.0",
-        "@graphql-codegen/visitor-plugin-common": "^6.0.0",
-        "@types/apollo-upload-client": "^18.0.0",
-        "@types/node": "^24.5.1",
-        "graphql": "^16.11.0",
-        "mocha": "^11.7.2",
-        "prettier": "^3.6.2",
-        "tsx": "^4.20.5",
-        "typescript": "^5.9.2",
+        "@graphql-codegen/cli": "^6.1.2",
+        "@graphql-codegen/plugin-helpers": "^6.1.0",
+        "@graphql-codegen/typescript": "^5.0.8",
+        "@graphql-codegen/visitor-plugin-common": "^6.2.3",
+        "@types/node": "^25.3.3",
+        "graphql": "^16.13.0",
+        "mocha": "^11.7.5",
+        "prettier": "^3.8.1",
+        "tsx": "^4.21.0",
+        "typescript": "^5.9.3",
         "uuid": "^13.0.0",
-        "yaml": "^2.8.1"
+        "yaml": "^2.8.2"
     },
     "publishConfig": {
         "access": "public"
