@@ -274,11 +274,10 @@ export class OpenCTIStream extends EventEmitter<{
         this.emit("readystatechange", { readyState: "stopped" });
     }
 
-    public async resync(): Promise<void> {
+    public resync() {
         if (this._readyState === "stopped") return;
 
-        this.teardownEventSource();
-        await this.resetState("resync");
+        this.resetState("resync");
     }
 
     private teardownEventSource() {
@@ -287,9 +286,16 @@ export class OpenCTIStream extends EventEmitter<{
         this.pendingEvents = [];
     }
 
-    private async resetState(reason: string): Promise<void> {
-        await this.state.replaceState({}, "0-0");
-        this.createEventSource(reason);
+    private resetState(reason: string) {
+        this.teardownEventSource();
+        this.state
+            .replaceState({}, "0-0")
+            .catch(() => {
+                // ignore
+            })
+            .finally(() => {
+                this.createEventSource(reason);
+            });
     }
 
     private createEventSource(reason: string) {
@@ -319,27 +325,13 @@ export class OpenCTIStream extends EventEmitter<{
             this.reconnectDelay = INITIAL_RECONNECT_DELAY;
 
             const lastEventId = this.state.getLastEventId();
-            const isInitialSync = lastEventId === "0-0";
-            const hasGap = !isInitialSync && compareEventIds(lastEventId, body.firstEventId) === 1;
-
-            if (isInitialSync || hasGap) {
-                this._readyState = "syncing";
-                this.emit("readystatechange", { readyState: "syncing", info: body });
-
-                if (hasGap) {
-                    this.teardownEventSource();
-                    try {
-                        await this.resetState("gap detected");
-                    } catch (err: any) {
-                        this.emit(
-                            "error",
-                            new ErrorEvent("error", { message: `gap resync failed: ${err?.message ?? err}` }),
-                        );
-                        this.stop();
-                    }
-                    return;
-                }
+            if (lastEventId !== "0-0" && compareEventIds(lastEventId, body.firstEventId) === 1) {
+                this.resetState("forced resync");
+                return;
             }
+
+            this._readyState = "syncing";
+            this.emit("readystatechange", { readyState: "syncing", info: body });
 
             this.tryMarkReady(lastEventId);
         });
