@@ -1,4 +1,4 @@
-import { StixBundle } from "@security-alliance/stix/2.1";
+import { StixBundle, StixObject } from "@security-alliance/stix/2.1";
 import { BaseOpenCTIClient, File_All, Maybe, MutationStixCyberObservableAddArgs } from "./generated/graphql.js";
 import { OpenCTIStream, OpenCTIStreamOptions } from "./sync.js";
 import { sleep } from "./utils.js";
@@ -112,8 +112,8 @@ export class OpenCTIClient extends BaseOpenCTIClient {
         }
     }
 
-    public openStream(streamId: string, options?: Omit<OpenCTIStreamOptions, "authorization">): OpenCTIStream {
-        return new OpenCTIStream(new URL(`${this.host}/stream/${streamId}`), {
+    public openStream<T = StixObject>(streamId: string, options?: Omit<OpenCTIStreamOptions<T>, "authorization">): OpenCTIStream<T> {
+        return new OpenCTIStream<T>(new URL(`${this.host}/stream/${streamId}`), {
             ...options,
             authorization: this.apiKey,
         });
