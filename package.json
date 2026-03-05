@@ -1,6 +1,6 @@
 {
     "name": "@security-alliance/opencti-client",
-    "version": "0.4.1",
+    "version": "0.5.0",
     "description": "TypeScript client for interacting with OpenCTI",
     "keywords": [
         "opencti",
@@ -23,7 +23,7 @@
     },
     "repository": "github:security-alliance/opencti-client",
     "scripts": {
-        "build": "rm -rf dist/; tsc -p tsconfig.release.json && cp src/generated/metadata.json src/generated/strings.bin dist/generated/",
+        "build": "rm -rf dist/; tsc -p tsconfig.release.json && cp src/generated/*.bin dist/generated/",
         "test": "mocha",
         "generate": "node --import tsx scripts/generate-opencti-client.ts",
         "prepublishOnly": "pnpm run build",

@@ -16,7 +16,7 @@ doesn't send delete events, so once we are outside redis stream range we can no 
 consistency without a full resync
 */
 
-import { Identifier, StixObject, StixObjectType, StixObjectTypeMap } from "@security-alliance/stix/2.1";
+import { Identifier, StixObject } from "@security-alliance/stix/2.1";
 import EventEmitter from "events";
 import { ErrorEvent, EventSource, EventSourceFetchInit } from "eventsource";
 import { readFile, rename, writeFile } from "fs/promises";
@@ -81,9 +81,9 @@ const compareEventIds = (a: string, b: string): -1 | 0 | 1 => {
     return 0;
 };
 
-export class InMemoryOpenCTIStreamStateManager implements OpenCTIStreamStateManager {
+export class InMemoryOpenCTIStreamStateManager<T = StixObject> implements OpenCTIStreamStateManager<T> {
     protected lastEventId: string;
-    protected objects: Record<Identifier, StixObject>;
+    protected objects: Record<Identifier, T>;
 
     constructor() {
         this.lastEventId = "0-0";
@@ -96,12 +96,16 @@ export class InMemoryOpenCTIStreamStateManager implements OpenCTIStreamStateMana
         return this.lastEventId;
     }
 
-    getObjects(): Record<string, StixObject> {
+    getObjects(): Record<string, T> {
         return this.objects;
     }
 
-    getObject<T extends StixObjectType>(id: Identifier<T>): StixObjectTypeMap[T] | undefined {
-        return this.objects[id] as StixObjectTypeMap[T];
+    getObject(id: Identifier): T | undefined {
+        return this.objects[id];
+    }
+
+    protected transformObject(obj: StixObject): T | undefined {
+        return obj as T;
     }
 
     async updateState(events: StateUpdateEvent[]): Promise<void> {
@@ -111,14 +115,18 @@ export class InMemoryOpenCTIStreamStateManager implements OpenCTIStreamStateMana
             switch (event.updateType) {
                 case "create":
                 case "update":
-                case "merge":
-                    this.objects[event.body.data.id] = event.body.data;
+                case "merge": {
+                    const transformed = this.transformObject(event.body.data);
+                    if (transformed !== undefined) {
+                        this.objects[event.body.data.id] = transformed;
+                    }
                     if (event.updateType === "merge") {
                         for (const source of event.body.context.sources) {
                             delete this.objects[source.id];
                         }
                     }
                     break;
+                }
                 case "delete":
                     delete this.objects[event.body.data.id];
                     break;
@@ -129,12 +137,18 @@ export class InMemoryOpenCTIStreamStateManager implements OpenCTIStreamStateMana
     }
 
     async replaceState(objects: Record<Identifier, StixObject>, lastEventId: string): Promise<void> {
-        this.objects = objects;
+        this.objects = {};
+        for (const [id, obj] of Object.entries(objects)) {
+            const transformed = this.transformObject(obj);
+            if (transformed !== undefined) {
+                this.objects[id as Identifier] = transformed;
+            }
+        }
         this.lastEventId = lastEventId;
     }
 }
 
-export class FilesystemOpenCTIStreamStateManager extends InMemoryOpenCTIStreamStateManager {
+export class FilesystemOpenCTIStreamStateManager<T = StixObject> extends InMemoryOpenCTIStreamStateManager<T> {
     private path: string;
     private commitFrequency: number;
 
@@ -197,7 +211,7 @@ const MAX_RECONNECT_DELAY = 60_000;
 const INITIAL_RECONNECT_DELAY = 1_000;
 const LIVENESS_CHECK_INTERVAL = 30_000;
 
-export class OpenCTIStream extends EventEmitter<{
+export class OpenCTIStream<T = StixObject> extends EventEmitter<{
     create: [CreateEvent];
     update: [UpdateEvent];
     delete: [DeleteEvent];
@@ -213,7 +227,7 @@ export class OpenCTIStream extends EventEmitter<{
     private withInferences: boolean;
     private authorization: string | undefined;
 
-    private state: OpenCTIStreamStateManager;
+    private state: OpenCTIStreamStateManager<T>;
 
     private signal: AbortSignal | undefined;
 
@@ -230,7 +244,7 @@ export class OpenCTIStream extends EventEmitter<{
     private pendingEvents: StateUpdateEvent[] = [];
     private processing = false;
 
-    constructor(stream: URL, options?: OpenCTIStreamOptions) {
+    constructor(stream: URL, options?: OpenCTIStreamOptions<T>) {
         super();
 
         this.stream = stream;
@@ -239,7 +253,7 @@ export class OpenCTIStream extends EventEmitter<{
         this.withInferences = options?.withInferences !== undefined ? options.withInferences : false;
         this.authorization = options?.authorization;
 
-        this.state = options?.state || new InMemoryOpenCTIStreamStateManager();
+        this.state = options?.state || new InMemoryOpenCTIStreamStateManager<T>();
         this.signal = options?.signal;
 
         this.signal?.addEventListener("abort", () => this.stop());
@@ -253,7 +267,7 @@ export class OpenCTIStream extends EventEmitter<{
         return this._readyState;
     }
 
-    get stateObjects(): Record<string, StixObject> {
+    get stateObjects(): Record<string, T> {
         return this.state.getObjects();
     }
 

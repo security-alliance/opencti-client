@@ -1,4 +1,4 @@
-import { openSync, readFileSync, readSync } from "node:fs";
+import { openSync, readSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 export type Maybe<T> = T | null | undefined;
@@ -280,17 +280,16 @@ export type AdministrativeAreaEdge = {
   node: AdministrativeArea;
 };
 
-export enum AdministrativeAreasOrdering {
-  Score = '_score',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectLabel = 'objectLabel',
-  ObjectMarking = 'objectMarking',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type AdministrativeAreasOrdering =
+  | '_score'
+  | 'created'
+  | 'created_at'
+  | 'modified'
+  | 'name'
+  | 'objectLabel'
+  | 'objectMarking'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type AiActivity = {
   __typename?: 'AiActivity';
@@ -321,10 +320,9 @@ export type AiSummary = {
 
 export type Analysis = MappingAnalysis;
 
-export enum AnalysisContentType {
-  Fields = 'fields',
-  File = 'file'
-}
+export type AnalysisContentType =
+  | 'fields'
+  | 'file';
 
 export type AppDebugDistribution = {
   __typename?: 'AppDebugDistribution';
@@ -374,10 +372,9 @@ export type AppMemory = {
   used_heap_size?: Maybe<Scalars['Float']['output']>;
 };
 
-export enum Architecture {
-  Arm64 = 'arm64',
-  X86_64 = 'x86_64'
-}
+export type Architecture =
+  | 'arm64'
+  | 'x86_64';
 
 export type Artifact = BasicObject & HashedObservable & StixCoreObject & StixCyberObservable & StixObject & {
   __typename?: 'Artifact';
@@ -944,17 +941,16 @@ export type AttackPatternsMatrix = {
   attackPatternsOfPhases?: Maybe<Array<AttackPatternsByKillChain>>;
 };
 
-export enum AttackPatternsOrdering {
-  Score = '_score',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectMarking = 'objectMarking',
-  UpdatedAt = 'updated_at',
-  XMitreId = 'x_mitre_id',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type AttackPatternsOrdering =
+  | '_score'
+  | 'created'
+  | 'created_at'
+  | 'modified'
+  | 'name'
+  | 'objectMarking'
+  | 'updated_at'
+  | 'x_mitre_id'
+  | 'x_opencti_workflow_id';
 
 export type Attribute = {
   __typename?: 'Attribute';
@@ -1040,10 +1036,9 @@ export type AttributeRefInput = {
   multiple?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export enum AttributesOrdering {
-  Score = '_score',
-  Value = 'value'
-}
+export type AttributesOrdering =
+  | '_score'
+  | 'value';
 
 export type AuditsTimeSeriesParameters = {
   field: Scalars['String']['input'];
@@ -1280,29 +1275,28 @@ export type BackgroundTaskActionInput = {
   type: BackgroundTaskActionType;
 };
 
-export enum BackgroundTaskActionType {
-  Add = 'ADD',
-  AddGroups = 'ADD_GROUPS',
-  AddOrganizations = 'ADD_ORGANIZATIONS',
-  CompleteDelete = 'COMPLETE_DELETE',
-  Delete = 'DELETE',
-  Enrichment = 'ENRICHMENT',
-  Merge = 'MERGE',
-  Promote = 'PROMOTE',
-  Remove = 'REMOVE',
-  RemoveAuthMembers = 'REMOVE_AUTH_MEMBERS',
-  RemoveFromDraft = 'REMOVE_FROM_DRAFT',
-  RemoveGroups = 'REMOVE_GROUPS',
-  RemoveOrganizations = 'REMOVE_ORGANIZATIONS',
-  Replace = 'REPLACE',
-  Restore = 'RESTORE',
-  RuleElementRescan = 'RULE_ELEMENT_RESCAN',
-  SendEmail = 'SEND_EMAIL',
-  Share = 'SHARE',
-  ShareMultiple = 'SHARE_MULTIPLE',
-  Unshare = 'UNSHARE',
-  UnshareMultiple = 'UNSHARE_MULTIPLE'
-}
+export type BackgroundTaskActionType =
+  | 'ADD'
+  | 'ADD_GROUPS'
+  | 'ADD_ORGANIZATIONS'
+  | 'COMPLETE_DELETE'
+  | 'DELETE'
+  | 'ENRICHMENT'
+  | 'MERGE'
+  | 'PROMOTE'
+  | 'REMOVE'
+  | 'REMOVE_AUTH_MEMBERS'
+  | 'REMOVE_FROM_DRAFT'
+  | 'REMOVE_GROUPS'
+  | 'REMOVE_ORGANIZATIONS'
+  | 'REPLACE'
+  | 'RESTORE'
+  | 'RULE_ELEMENT_RESCAN'
+  | 'SEND_EMAIL'
+  | 'SHARE'
+  | 'SHARE_MULTIPLE'
+  | 'UNSHARE'
+  | 'UNSHARE_MULTIPLE';
 
 export type BackgroundTaskConnection = {
   __typename?: 'BackgroundTaskConnection';
@@ -1334,11 +1328,10 @@ export type BackgroundTaskContextOptionsInput = {
   includeNeighbours?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export enum BackgroundTaskContextType {
-  Attribute = 'ATTRIBUTE',
-  Relation = 'RELATION',
-  ReversedRelation = 'REVERSED_RELATION'
-}
+export type BackgroundTaskContextType =
+  | 'ATTRIBUTE'
+  | 'RELATION'
+  | 'REVERSED_RELATION';
 
 export type BackgroundTaskError = {
   __typename?: 'BackgroundTaskError';
@@ -1347,32 +1340,29 @@ export type BackgroundTaskError = {
   timestamp?: Maybe<Scalars['DateTime']['output']>;
 };
 
-export enum BackgroundTaskScope {
-  Dashboard = 'DASHBOARD',
-  Import = 'IMPORT',
-  Investigation = 'INVESTIGATION',
-  Knowledge = 'KNOWLEDGE',
-  Playbook = 'PLAYBOOK',
-  PublicDashboard = 'PUBLIC_DASHBOARD',
-  Settings = 'SETTINGS',
-  User = 'USER',
-  UserNotification = 'USER_NOTIFICATION'
-}
+export type BackgroundTaskScope =
+  | 'DASHBOARD'
+  | 'IMPORT'
+  | 'INVESTIGATION'
+  | 'KNOWLEDGE'
+  | 'PLAYBOOK'
+  | 'PUBLIC_DASHBOARD'
+  | 'SETTINGS'
+  | 'USER'
+  | 'USER_NOTIFICATION';
 
-export enum BackgroundTaskType {
-  List = 'LIST',
-  Query = 'QUERY',
-  Rule = 'RULE'
-}
+export type BackgroundTaskType =
+  | 'LIST'
+  | 'QUERY'
+  | 'RULE';
 
-export enum BackgroundTasksOrdering {
-  Score = '_score',
-  Completed = 'completed',
-  CreatedAt = 'created_at',
-  Id = 'id',
-  LastExecutionDate = 'last_execution_date',
-  Type = 'type'
-}
+export type BackgroundTasksOrdering =
+  | '_score'
+  | 'completed'
+  | 'created_at'
+  | 'id'
+  | 'last_execution_date'
+  | 'type';
 
 export type BankAccount = BasicObject & StixCoreObject & StixCyberObservable & StixObject & {
   __typename?: 'BankAccount';
@@ -1878,63 +1868,61 @@ export type CampaignEditMutationsRelationDeleteArgs = {
   toId: Scalars['StixRef']['input'];
 };
 
-export enum CampaignsOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  FirstSeen = 'first_seen',
-  LastSeen = 'last_seen',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectMarking = 'objectMarking',
-  RolePlayed = 'role_played',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type CampaignsOrdering =
+  | '_score'
+  | 'confidence'
+  | 'created'
+  | 'created_at'
+  | 'first_seen'
+  | 'last_seen'
+  | 'modified'
+  | 'name'
+  | 'objectMarking'
+  | 'role_played'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
-export enum Capabilities {
-  Bypass = 'BYPASS',
-  Connectorapi = 'CONNECTORAPI',
-  Csvmappers = 'CSVMAPPERS',
-  Explore = 'EXPLORE',
-  ExploreExupdate = 'EXPLORE_EXUPDATE',
-  ExploreExupdateExdelete = 'EXPLORE_EXUPDATE_EXDELETE',
-  ExploreExupdatePublish = 'EXPLORE_EXUPDATE_PUBLISH',
-  Ingestion = 'INGESTION',
-  IngestionSetingestions = 'INGESTION_SETINGESTIONS',
-  Investigation = 'INVESTIGATION',
-  InvestigationInupdate = 'INVESTIGATION_INUPDATE',
-  InvestigationInupdateIndelete = 'INVESTIGATION_INUPDATE_INDELETE',
-  Knowledge = 'KNOWLEDGE',
-  KnowledgeKnaskimport = 'KNOWLEDGE_KNASKIMPORT',
-  KnowledgeKndissemination = 'KNOWLEDGE_KNDISSEMINATION',
-  KnowledgeKnenrichment = 'KNOWLEDGE_KNENRICHMENT',
-  KnowledgeKngetexport = 'KNOWLEDGE_KNGETEXPORT',
-  KnowledgeKngetexportKnaskexport = 'KNOWLEDGE_KNGETEXPORT_KNASKEXPORT',
-  KnowledgeKnparticipate = 'KNOWLEDGE_KNPARTICIPATE',
-  KnowledgeKnupdate = 'KNOWLEDGE_KNUPDATE',
-  KnowledgeKnupdateKndelete = 'KNOWLEDGE_KNUPDATE_KNDELETE',
-  KnowledgeKnupdateKnmanageauthmembers = 'KNOWLEDGE_KNUPDATE_KNMANAGEAUTHMEMBERS',
-  KnowledgeKnupdateKnorgarestrict = 'KNOWLEDGE_KNUPDATE_KNORGARESTRICT',
-  KnowledgeKnupload = 'KNOWLEDGE_KNUPLOAD',
-  Modules = 'MODULES',
-  ModulesModmanage = 'MODULES_MODMANAGE',
-  Settings = 'SETTINGS',
-  SettingsFileindexing = 'SETTINGS_FILEINDEXING',
-  SettingsSecurityactivity = 'SETTINGS_SECURITYACTIVITY',
-  SettingsSetaccesses = 'SETTINGS_SETACCESSES',
-  SettingsSetcustomization = 'SETTINGS_SETCUSTOMIZATION',
-  SettingsSetdissemination = 'SETTINGS_SETDISSEMINATION',
-  SettingsSetlabels = 'SETTINGS_SETLABELS',
-  SettingsSetmanagextmhub = 'SETTINGS_SETMANAGEXTMHUB',
-  SettingsSetmarkings = 'SETTINGS_SETMARKINGS',
-  SettingsSetparameters = 'SETTINGS_SETPARAMETERS',
-  SettingsSupport = 'SETTINGS_SUPPORT',
-  Taxiiapi = 'TAXIIAPI',
-  TaxiiapiSetcollections = 'TAXIIAPI_SETCOLLECTIONS',
-  VirtualOrganizationAdmin = 'VIRTUAL_ORGANIZATION_ADMIN'
-}
+export type Capabilities =
+  | 'BYPASS'
+  | 'CONNECTORAPI'
+  | 'CSVMAPPERS'
+  | 'EXPLORE'
+  | 'EXPLORE_EXUPDATE'
+  | 'EXPLORE_EXUPDATE_EXDELETE'
+  | 'EXPLORE_EXUPDATE_PUBLISH'
+  | 'INGESTION'
+  | 'INGESTION_SETINGESTIONS'
+  | 'INVESTIGATION'
+  | 'INVESTIGATION_INUPDATE'
+  | 'INVESTIGATION_INUPDATE_INDELETE'
+  | 'KNOWLEDGE'
+  | 'KNOWLEDGE_KNASKIMPORT'
+  | 'KNOWLEDGE_KNDISSEMINATION'
+  | 'KNOWLEDGE_KNENRICHMENT'
+  | 'KNOWLEDGE_KNGETEXPORT'
+  | 'KNOWLEDGE_KNGETEXPORT_KNASKEXPORT'
+  | 'KNOWLEDGE_KNPARTICIPATE'
+  | 'KNOWLEDGE_KNUPDATE'
+  | 'KNOWLEDGE_KNUPDATE_KNDELETE'
+  | 'KNOWLEDGE_KNUPDATE_KNMANAGEAUTHMEMBERS'
+  | 'KNOWLEDGE_KNUPDATE_KNORGARESTRICT'
+  | 'KNOWLEDGE_KNUPLOAD'
+  | 'MODULES'
+  | 'MODULES_MODMANAGE'
+  | 'SETTINGS'
+  | 'SETTINGS_FILEINDEXING'
+  | 'SETTINGS_SECURITYACTIVITY'
+  | 'SETTINGS_SETACCESSES'
+  | 'SETTINGS_SETCUSTOMIZATION'
+  | 'SETTINGS_SETDISSEMINATION'
+  | 'SETTINGS_SETLABELS'
+  | 'SETTINGS_SETMANAGEXTMHUB'
+  | 'SETTINGS_SETMARKINGS'
+  | 'SETTINGS_SETPARAMETERS'
+  | 'SETTINGS_SUPPORT'
+  | 'TAXIIAPI'
+  | 'TAXIIAPI_SETCOLLECTIONS'
+  | 'VIRTUAL_ORGANIZATION_ADMIN';
 
 export type Capability = BasicObject & InternalObject & {
   __typename?: 'Capability';
@@ -2500,23 +2488,22 @@ export type CaseIncidentEdge = {
   node: CaseIncident;
 };
 
-export enum CaseIncidentsOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Context = 'context',
-  Created = 'created',
-  CreatedBy = 'createdBy',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectAssignee = 'objectAssignee',
-  ObjectMarking = 'objectMarking',
-  Priority = 'priority',
-  Severity = 'severity',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type CaseIncidentsOrdering =
+  | '_score'
+  | 'confidence'
+  | 'context'
+  | 'created'
+  | 'createdBy'
+  | 'created_at'
+  | 'creator'
+  | 'modified'
+  | 'name'
+  | 'objectAssignee'
+  | 'objectMarking'
+  | 'priority'
+  | 'severity'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type CaseRfi = BasicObject & Case & Container & StixCoreObject & StixDomainObject & StixObject & {
   __typename?: 'CaseRfi';
@@ -2808,22 +2795,21 @@ export type CaseRfiEdge = {
   node: CaseRfi;
 };
 
-export enum CaseRfisOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Created = 'created',
-  CreatedBy = 'createdBy',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectAssignee = 'objectAssignee',
-  ObjectMarking = 'objectMarking',
-  Priority = 'priority',
-  Severity = 'severity',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type CaseRfisOrdering =
+  | '_score'
+  | 'confidence'
+  | 'created'
+  | 'createdBy'
+  | 'created_at'
+  | 'creator'
+  | 'modified'
+  | 'name'
+  | 'objectAssignee'
+  | 'objectMarking'
+  | 'priority'
+  | 'severity'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type CaseRft = BasicObject & Case & Container & StixCoreObject & StixDomainObject & StixObject & {
   __typename?: 'CaseRft';
@@ -3111,23 +3097,22 @@ export type CaseRftEdge = {
   node: CaseRft;
 };
 
-export enum CaseRftsOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Context = 'context',
-  Created = 'created',
-  CreatedBy = 'createdBy',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectAssignee = 'objectAssignee',
-  ObjectMarking = 'objectMarking',
-  Priority = 'priority',
-  Severity = 'severity',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type CaseRftsOrdering =
+  | '_score'
+  | 'confidence'
+  | 'context'
+  | 'created'
+  | 'createdBy'
+  | 'created_at'
+  | 'creator'
+  | 'modified'
+  | 'name'
+  | 'objectAssignee'
+  | 'objectMarking'
+  | 'priority'
+  | 'severity'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type CaseTemplate = BasicObject & InternalObject & {
   __typename?: 'CaseTemplate';
@@ -3161,27 +3146,25 @@ export type CaseTemplateEdge = {
   node: CaseTemplate;
 };
 
-export enum CaseTemplatesOrdering {
-  Score = '_score',
-  Created = 'created',
-  Description = 'description',
-  Name = 'name'
-}
+export type CaseTemplatesOrdering =
+  | '_score'
+  | 'created'
+  | 'description'
+  | 'name';
 
-export enum CasesOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Context = 'context',
-  Created = 'created',
-  CreatedBy = 'createdBy',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectMarking = 'objectMarking',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type CasesOrdering =
+  | '_score'
+  | 'confidence'
+  | 'context'
+  | 'created'
+  | 'createdBy'
+  | 'created_at'
+  | 'creator'
+  | 'modified'
+  | 'name'
+  | 'objectMarking'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type Catalog = BasicObject & InternalObject & {
   __typename?: 'Catalog';
@@ -3206,10 +3189,9 @@ export type CatalogEdge = {
   node: Catalog;
 };
 
-export enum CatalogsOrdering {
-  Score = '_score',
-  Name = 'name'
-}
+export type CatalogsOrdering =
+  | '_score'
+  | 'name';
 
 export type ChangePasswordInput = {
   newPassword: Scalars['String']['input'];
@@ -3449,37 +3431,35 @@ export type ChannelEdge = {
   node: Channel;
 };
 
-export enum ChannelsOrdering {
-  Score = '_score',
-  ChannelTypes = 'channel_types',
-  Confidence = 'confidence',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectLabel = 'objectLabel',
-  ObjectMarking = 'objectMarking',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type ChannelsOrdering =
+  | '_score'
+  | 'channel_types'
+  | 'confidence'
+  | 'created'
+  | 'created_at'
+  | 'modified'
+  | 'name'
+  | 'objectLabel'
+  | 'objectMarking'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type CheckXtmHubConnectivityResponse = {
   __typename?: 'CheckXTMHubConnectivityResponse';
   status?: Maybe<XtmHubRegistrationStatus>;
 };
 
-export enum CitiesOrdering {
-  Score = '_score',
-  Aliases = 'aliases',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectLabel = 'objectLabel',
-  ObjectMarking = 'objectMarking',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type CitiesOrdering =
+  | '_score'
+  | 'aliases'
+  | 'created'
+  | 'created_at'
+  | 'modified'
+  | 'name'
+  | 'objectLabel'
+  | 'objectMarking'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type City = BasicObject & Location & StixCoreObject & StixDomainObject & StixObject & {
   __typename?: 'City';
@@ -3862,10 +3842,9 @@ export type ConnectorContractConfiguration = {
   value?: Maybe<Scalars['String']['output']>;
 };
 
-export enum ConnectorCurrentStatus {
-  Started = 'started',
-  Stopped = 'stopped'
-}
+export type ConnectorCurrentStatus =
+  | 'started'
+  | 'stopped';
 
 export type ConnectorInfo = {
   __typename?: 'ConnectorInfo';
@@ -3909,20 +3888,18 @@ export type ConnectorQueueDetails = {
   messages_size: Scalars['Float']['output'];
 };
 
-export enum ConnectorRequestStatus {
-  Starting = 'starting',
-  Stopping = 'stopping'
-}
+export type ConnectorRequestStatus =
+  | 'starting'
+  | 'stopping';
 
-export enum ConnectorType {
-  ExternalImport = 'EXTERNAL_IMPORT',
-  InternalAnalysis = 'INTERNAL_ANALYSIS',
-  InternalEnrichment = 'INTERNAL_ENRICHMENT',
-  InternalExportFile = 'INTERNAL_EXPORT_FILE',
-  InternalImportFile = 'INTERNAL_IMPORT_FILE',
-  InternalIngestionPir = 'INTERNAL_INGESTION_PIR',
-  Stream = 'STREAM'
-}
+export type ConnectorType =
+  | 'EXTERNAL_IMPORT'
+  | 'INTERNAL_ANALYSIS'
+  | 'INTERNAL_ENRICHMENT'
+  | 'INTERNAL_EXPORT_FILE'
+  | 'INTERNAL_IMPORT_FILE'
+  | 'INTERNAL_INGESTION_PIR'
+  | 'STREAM';
 
 export type ConnectorWithConfig = {
   configuration?: InputMaybe<Scalars['String']['input']>;
@@ -4180,20 +4157,19 @@ export type ContainerEditMutationsRelationDeleteArgs = {
   toId: Scalars['StixRef']['input'];
 };
 
-export enum ContainersOrdering {
-  Score = '_score',
-  Created = 'created',
-  CreatedBy = 'createdBy',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  EntityType = 'entity_type',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectMarking = 'objectMarking',
-  Published = 'published',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type ContainersOrdering =
+  | '_score'
+  | 'created'
+  | 'createdBy'
+  | 'created_at'
+  | 'creator'
+  | 'entity_type'
+  | 'modified'
+  | 'name'
+  | 'objectMarking'
+  | 'published'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type ContextData = {
   __typename?: 'ContextData';
@@ -4213,15 +4189,14 @@ export type ContractConfigInput = {
   value?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
-export enum CountriesOrdering {
-  Score = '_score',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Modified = 'modified',
-  Name = 'name',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type CountriesOrdering =
+  | '_score'
+  | 'created'
+  | 'created_at'
+  | 'modified'
+  | 'name'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type Country = BasicObject & Location & StixCoreObject & StixDomainObject & StixObject & {
   __typename?: 'Country';
@@ -4760,17 +4735,16 @@ export type CourseOfActionEditMutationsRelationDeleteArgs = {
   toId: Scalars['StixRef']['input'];
 };
 
-export enum CoursesOfActionOrdering {
-  Score = '_score',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectMarking = 'objectMarking',
-  UpdatedAt = 'updated_at',
-  XMitreId = 'x_mitre_id',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type CoursesOfActionOrdering =
+  | '_score'
+  | 'created'
+  | 'created_at'
+  | 'modified'
+  | 'name'
+  | 'objectMarking'
+  | 'updated_at'
+  | 'x_mitre_id'
+  | 'x_opencti_workflow_id';
 
 export type Creator = {
   __typename?: 'Creator';
@@ -5431,15 +5405,13 @@ export type CsvMapperEdge = {
   node: CsvMapper;
 };
 
-export enum CsvMapperOperator {
-  Eq = 'eq',
-  NotEq = 'not_eq'
-}
+export type CsvMapperOperator =
+  | 'eq'
+  | 'not_eq';
 
-export enum CsvMapperOrdering {
-  Score = '_score',
-  Name = 'name'
-}
+export type CsvMapperOrdering =
+  | '_score'
+  | 'name';
 
 export type CsvMapperRepresentation = {
   __typename?: 'CsvMapperRepresentation';
@@ -5500,10 +5472,9 @@ export type CsvMapperRepresentationTargetInput = {
   entity_type: Scalars['String']['input'];
 };
 
-export enum CsvMapperRepresentationType {
-  Entity = 'entity',
-  Relationship = 'relationship'
-}
+export type CsvMapperRepresentationType =
+  | 'entity'
+  | 'relationship';
 
 export type CsvMapperSchemaAttribute = {
   __typename?: 'CsvMapperSchemaAttribute';
@@ -5769,16 +5740,15 @@ export type DataComponentEdge = {
   node: DataComponent;
 };
 
-export enum DataComponentsOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Modified = 'modified',
-  Name = 'name',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type DataComponentsOrdering =
+  | '_score'
+  | 'confidence'
+  | 'created'
+  | 'created_at'
+  | 'modified'
+  | 'name'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type DataSource = BasicObject & StixCoreObject & StixDomainObject & StixObject & {
   __typename?: 'DataSource';
@@ -6016,16 +5986,15 @@ export type DataSourceEdge = {
   node: DataSource;
 };
 
-export enum DataSourcesOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Modified = 'modified',
-  Name = 'name',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type DataSourcesOrdering =
+  | '_score'
+  | 'confidence'
+  | 'created'
+  | 'created_at'
+  | 'modified'
+  | 'name'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type DecayChartData = {
   __typename?: 'DecayChartData';
@@ -6095,11 +6064,10 @@ export type DecayRuleEdge = {
   node: DecayRule;
 };
 
-export enum DecayRuleOrdering {
-  Score = '_score',
-  Name = 'name',
-  Order = 'order'
-}
+export type DecayRuleOrdering =
+  | '_score'
+  | 'name'
+  | 'order';
 
 export type DefaultMarking = {
   __typename?: 'DefaultMarking';
@@ -6160,13 +6128,12 @@ export type DeleteOperationEdge = {
   node: DeleteOperation;
 };
 
-export enum DeleteOperationOrdering {
-  Score = '_score',
-  CreatedAt = 'created_at',
-  DeletedBy = 'deletedBy',
-  MainEntityName = 'main_entity_name',
-  ObjectMarking = 'objectMarking'
-}
+export type DeleteOperationOrdering =
+  | '_score'
+  | 'created_at'
+  | 'deletedBy'
+  | 'main_entity_name'
+  | 'objectMarking';
 
 export type DeletedElement = {
   __typename?: 'DeletedElement';
@@ -6192,12 +6159,11 @@ export type DictionaryInput = {
   value: Scalars['String']['input'];
 };
 
-export enum DigestPeriod {
-  Day = 'day',
-  Hour = 'hour',
-  Month = 'month',
-  Week = 'week'
-}
+export type DigestPeriod =
+  | 'day'
+  | 'hour'
+  | 'month'
+  | 'week';
 
 export type Directory = BasicObject & StixCoreObject & StixCyberObservable & StixObject & {
   __typename?: 'Directory';
@@ -6453,10 +6419,9 @@ export type DisseminationListEdge = {
   node: DisseminationList;
 };
 
-export enum DisseminationListOrdering {
-  Score = '_score',
-  Name = 'name'
-}
+export type DisseminationListOrdering =
+  | '_score'
+  | 'name';
 
 export type DisseminationListSendInput = {
   email_attachment_ids: Array<Scalars['ID']['input']>;
@@ -6686,18 +6651,16 @@ export type DraftObjectsCount = {
   totalCount: Scalars['Int']['output'];
 };
 
-export enum DraftOperation {
-  Create = 'create',
-  Delete = 'delete',
-  DeleteLinked = 'delete_linked',
-  Update = 'update',
-  UpdateLinked = 'update_linked'
-}
+export type DraftOperation =
+  | 'create'
+  | 'delete'
+  | 'delete_linked'
+  | 'update'
+  | 'update_linked';
 
-export enum DraftStatus {
-  Open = 'open',
-  Validated = 'validated'
-}
+export type DraftStatus =
+  | 'open'
+  | 'validated';
 
 export type DraftVersion = {
   __typename?: 'DraftVersion';
@@ -6744,13 +6707,12 @@ export type DraftWorkspaceEdge = {
   node: DraftWorkspace;
 };
 
-export enum DraftWorkspacesOrdering {
-  Score = '_score',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  DraftStatus = 'draft_status',
-  Name = 'name'
-}
+export type DraftWorkspacesOrdering =
+  | '_score'
+  | 'created_at'
+  | 'creator'
+  | 'draft_status'
+  | 'name';
 
 export type EditContext = {
   focusOn?: InputMaybe<Scalars['String']['input']>;
@@ -6770,11 +6732,10 @@ export type EditManagedConnectorInput = {
   name: Scalars['String']['input'];
 };
 
-export enum EditOperation {
-  Add = 'add',
-  Remove = 'remove',
-  Replace = 'replace'
-}
+export type EditOperation =
+  | 'add'
+  | 'remove'
+  | 'replace';
 
 export type EditUserContext = {
   __typename?: 'EditUserContext';
@@ -6804,11 +6765,10 @@ export type EffectiveConfidenceLevelSource = {
 
 export type EffectiveConfidenceLevelSourceObject = Group | User;
 
-export enum EffectiveConfidenceLevelSourceType {
-  Bypass = 'Bypass',
-  Group = 'Group',
-  User = 'User'
-}
+export type EffectiveConfidenceLevelSourceType =
+  | 'Bypass'
+  | 'Group'
+  | 'User';
 
 export type ElasticSearchMetrics = {
   __typename?: 'ElasticSearchMetrics';
@@ -7460,10 +7420,9 @@ export type EmailTemplateEdge = {
   node: EmailTemplate;
 };
 
-export enum EmailTemplateOrdering {
-  Score = '_score',
-  Name = 'name'
-}
+export type EmailTemplateOrdering =
+  | '_score'
+  | 'name';
 
 export type EntitySetting = BasicObject & InternalObject & {
   __typename?: 'EntitySetting';
@@ -7509,10 +7468,9 @@ export type EntitySettingEdge = {
   node: EntitySetting;
 };
 
-export enum EntitySettingsOrdering {
-  Score = '_score',
-  TargetType = 'target_type'
-}
+export type EntitySettingsOrdering =
+  | '_score'
+  | 'target_type';
 
 export type Event = BasicObject & StixCoreObject & StixDomainObject & StixObject & {
   __typename?: 'Event';
@@ -7749,20 +7707,19 @@ export type EventEdge = {
   node: Event;
 };
 
-export enum EventsOrdering {
-  Score = '_score',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  EventTypes = 'event_types',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectLabel = 'objectLabel',
-  ObjectMarking = 'objectMarking',
-  StartTime = 'start_time',
-  StopTime = 'stop_time',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type EventsOrdering =
+  | '_score'
+  | 'created'
+  | 'created_at'
+  | 'event_types'
+  | 'modified'
+  | 'name'
+  | 'objectLabel'
+  | 'objectMarking'
+  | 'start_time'
+  | 'stop_time'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type ExclusionList = BasicObject & InternalObject & {
   __typename?: 'ExclusionList';
@@ -7806,13 +7763,12 @@ export type ExclusionListFileAddInput = {
   name: Scalars['String']['input'];
 };
 
-export enum ExclusionListOrdering {
-  Score = '_score',
-  CreatedAt = 'created_at',
-  Enabled = 'enabled',
-  ExclusionListValuesCount = 'exclusion_list_values_count',
-  Name = 'name'
-}
+export type ExclusionListOrdering =
+  | '_score'
+  | 'created_at'
+  | 'enabled'
+  | 'exclusion_list_values_count'
+  | 'name';
 
 export type ExportAskInput = {
   contentMaxMarkings?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
@@ -7979,18 +7935,17 @@ export type ExternalReferenceEditMutationsRelationDeleteArgs = {
   relationship_type: Scalars['String']['input'];
 };
 
-export enum ExternalReferencesOrdering {
-  Score = '_score',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  ExternalId = 'external_id',
-  Hash = 'hash',
-  Modified = 'modified',
-  SourceName = 'source_name',
-  UpdatedAt = 'updated_at',
-  Url = 'url'
-}
+export type ExternalReferencesOrdering =
+  | '_score'
+  | 'created'
+  | 'created_at'
+  | 'creator'
+  | 'external_id'
+  | 'hash'
+  | 'modified'
+  | 'source_name'
+  | 'updated_at'
+  | 'url';
 
 export type Feed = {
   __typename?: 'Feed';
@@ -8057,12 +8012,11 @@ export type FeedMappingInput = {
   type: Scalars['String']['input'];
 };
 
-export enum FeedOrdering {
-  Score = '_score',
-  FeedTypes = 'feed_types',
-  Name = 'name',
-  RollingTime = 'rolling_time'
-}
+export type FeedOrdering =
+  | '_score'
+  | 'feed_types'
+  | 'name'
+  | 'rolling_time';
 
 export type Feedback = BasicObject & Case & Container & StixCoreObject & StixDomainObject & StixObject & {
   __typename?: 'Feedback';
@@ -8343,21 +8297,20 @@ export type FeedbackEdge = {
   node: Feedback;
 };
 
-export enum FeedbacksOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Context = 'context',
-  Created = 'created',
-  CreatedBy = 'createdBy',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectMarking = 'objectMarking',
-  Rating = 'rating',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type FeedbacksOrdering =
+  | '_score'
+  | 'confidence'
+  | 'context'
+  | 'created'
+  | 'createdBy'
+  | 'created_at'
+  | 'creator'
+  | 'modified'
+  | 'name'
+  | 'objectMarking'
+  | 'rating'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type File = {
   __typename?: 'File';
@@ -8410,12 +8363,11 @@ export type FileMetadata = {
   version?: Maybe<Scalars['String']['output']>;
 };
 
-export enum FileOrdering {
-  Score = '_score',
-  LastModified = 'lastModified',
-  Name = 'name',
-  ObjectMarking = 'objectMarking'
-}
+export type FileOrdering =
+  | '_score'
+  | 'lastModified'
+  | 'name'
+  | 'objectMarking';
 
 export type FilesMetrics = {
   __typename?: 'FilesMetrics';
@@ -8460,32 +8412,30 @@ export type FilterKeysSchema = {
   filters_schema: Array<FilterDefinitionSchema>;
 };
 
-export enum FilterMode {
-  And = 'and',
-  Or = 'or'
-}
+export type FilterMode =
+  | 'and'
+  | 'or';
 
-export enum FilterOperator {
-  Contains = 'contains',
-  EndsWith = 'ends_with',
-  Eq = 'eq',
-  Gt = 'gt',
-  Gte = 'gte',
-  Lt = 'lt',
-  Lte = 'lte',
-  Match = 'match',
-  Nil = 'nil',
-  NotContains = 'not_contains',
-  NotEndsWith = 'not_ends_with',
-  NotEq = 'not_eq',
-  NotNil = 'not_nil',
-  NotStartsWith = 'not_starts_with',
-  Script = 'script',
-  Search = 'search',
-  StartsWith = 'starts_with',
-  Wildcard = 'wildcard',
-  Within = 'within'
-}
+export type FilterOperator =
+  | 'contains'
+  | 'ends_with'
+  | 'eq'
+  | 'gt'
+  | 'gte'
+  | 'lt'
+  | 'lte'
+  | 'match'
+  | 'nil'
+  | 'not_contains'
+  | 'not_ends_with'
+  | 'not_eq'
+  | 'not_nil'
+  | 'not_starts_with'
+  | 'script'
+  | 'search'
+  | 'starts_with'
+  | 'wildcard'
+  | 'within';
 
 export type FintelDesign = BasicObject & InternalObject & {
   __typename?: 'FintelDesign';
@@ -8522,11 +8472,10 @@ export type FintelDesignEdge = {
   node?: Maybe<FintelDesign>;
 };
 
-export enum FintelDesignOrdering {
-  Score = '_score',
-  CreatedAt = 'created_at',
-  Name = 'name'
-}
+export type FintelDesignOrdering =
+  | '_score'
+  | 'created_at'
+  | 'name';
 
 export type FintelTemplate = BasicObject & InternalObject & {
   __typename?: 'FintelTemplate';
@@ -8566,10 +8515,9 @@ export type FintelTemplateEdge = {
   node: FintelTemplate;
 };
 
-export enum FintelTemplateOrdering {
-  Name = 'name',
-  StartDate = 'start_date'
-}
+export type FintelTemplateOrdering =
+  | 'name'
+  | 'start_date';
 
 export type FintelTemplateWidget = {
   __typename?: 'FintelTemplateWidget';
@@ -8582,12 +8530,11 @@ export type FintelTemplateWidgetAddInput = {
   widget: Scalars['Any']['input'];
 };
 
-export enum Format {
-  Html = 'html',
-  Json = 'json',
-  Markdown = 'markdown',
-  Text = 'text'
-}
+export type Format =
+  | 'html'
+  | 'json'
+  | 'markdown'
+  | 'text';
 
 export type GenerationResponse = {
   __typename?: 'GenerationResponse';
@@ -8984,31 +8931,29 @@ export type GroupingEdge = {
   node: Grouping;
 };
 
-export enum GroupingsOrdering {
-  Score = '_score',
-  Context = 'context',
-  Created = 'created',
-  CreatedBy = 'createdBy',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectMarking = 'objectMarking',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type GroupingsOrdering =
+  | '_score'
+  | 'context'
+  | 'created'
+  | 'createdBy'
+  | 'created_at'
+  | 'creator'
+  | 'modified'
+  | 'name'
+  | 'objectMarking'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
-export enum GroupsOrdering {
-  Score = '_score',
-  AutoNewMarking = 'auto_new_marking',
-  CreatedAt = 'created_at',
-  DefaultAssignation = 'default_assignation',
-  GroupConfidenceLevel = 'group_confidence_level',
-  Name = 'name',
-  NoCreators = 'no_creators',
-  RestrictDelete = 'restrict_delete',
-  UpdatedAt = 'updated_at'
-}
+export type GroupsOrdering =
+  | '_score'
+  | 'auto_new_marking'
+  | 'created_at'
+  | 'default_assignation'
+  | 'group_confidence_level'
+  | 'name'
+  | 'no_creators'
+  | 'restrict_delete'
+  | 'updated_at';
 
 export type Hash = {
   __typename?: 'Hash';
@@ -9811,15 +9756,14 @@ export type IPv6AddrAddInput = {
   value?: InputMaybe<Scalars['String']['input']>;
 };
 
-export enum IdentitiesOrdering {
-  Score = '_score',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Modified = 'modified',
-  Name = 'name',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type IdentitiesOrdering =
+  | '_score'
+  | 'created'
+  | 'created_at'
+  | 'modified'
+  | 'name'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type Identity = {
   avatar?: Maybe<OpenCtiFile>;
@@ -10086,12 +10030,11 @@ export type IdentityEditMutationsRelationDeleteArgs = {
   toId: Scalars['StixRef']['input'];
 };
 
-export enum IdentityType {
-  Individual = 'Individual',
-  Organization = 'Organization',
-  Sector = 'Sector',
-  System = 'System'
-}
+export type IdentityType =
+  | 'Individual'
+  | 'Organization'
+  | 'Sector'
+  | 'System';
 
 export type ImportConfigurationInput = {
   dashboardManifest?: InputMaybe<Scalars['String']['input']>;
@@ -10381,24 +10324,23 @@ export type IncidentEditMutationsRelationDeleteArgs = {
   toId: Scalars['StixRef']['input'];
 };
 
-export enum IncidentsOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  FirstSeen = 'first_seen',
-  IncidentType = 'incident_type',
-  LastSeen = 'last_seen',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectAssignee = 'objectAssignee',
-  ObjectMarking = 'objectMarking',
-  Severity = 'severity',
-  Source = 'source',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type IncidentsOrdering =
+  | '_score'
+  | 'confidence'
+  | 'created'
+  | 'created_at'
+  | 'creator'
+  | 'first_seen'
+  | 'incident_type'
+  | 'last_seen'
+  | 'modified'
+  | 'name'
+  | 'objectAssignee'
+  | 'objectMarking'
+  | 'severity'
+  | 'source'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type IndexedFile = {
   __typename?: 'IndexedFile';
@@ -10702,33 +10644,31 @@ export type IndicatorEdge = {
   node: Indicator;
 };
 
-export enum IndicatorFormat {
-  Sigma = 'sigma',
-  Stix = 'stix',
-  Yara = 'yara'
-}
+export type IndicatorFormat =
+  | 'sigma'
+  | 'stix'
+  | 'yara';
 
-export enum IndicatorsOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Created = 'created',
-  CreatedBy = 'createdBy',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  IndicatorTypes = 'indicator_types',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectMarking = 'objectMarking',
-  Pattern = 'pattern',
-  PatternType = 'pattern_type',
-  PatternVersion = 'pattern_version',
-  UpdatedAt = 'updated_at',
-  ValidFrom = 'valid_from',
-  ValidUntil = 'valid_until',
-  XOpenctiDetection = 'x_opencti_detection',
-  XOpenctiScore = 'x_opencti_score',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type IndicatorsOrdering =
+  | '_score'
+  | 'confidence'
+  | 'created'
+  | 'createdBy'
+  | 'created_at'
+  | 'creator'
+  | 'indicator_types'
+  | 'modified'
+  | 'name'
+  | 'objectMarking'
+  | 'pattern'
+  | 'pattern_type'
+  | 'pattern_version'
+  | 'updated_at'
+  | 'valid_from'
+  | 'valid_until'
+  | 'x_opencti_detection'
+  | 'x_opencti_score'
+  | 'x_opencti_workflow_id';
 
 export type Individual = BasicObject & Identity & StixCoreObject & StixDomainObject & StixObject & {
   __typename?: 'Individual';
@@ -11006,16 +10946,15 @@ export type IndividualEditMutationsRelationDeleteArgs = {
   toId: Scalars['StixRef']['input'];
 };
 
-export enum IndividualsOrdering {
-  Score = '_score',
-  Created = 'created',
-  Firstname = 'firstname',
-  Lastname = 'lastname',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectMarking = 'objectMarking',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type IndividualsOrdering =
+  | '_score'
+  | 'created'
+  | 'firstname'
+  | 'lastname'
+  | 'modified'
+  | 'name'
+  | 'objectMarking'
+  | 'x_opencti_workflow_id';
 
 export type Inference = {
   __typename?: 'Inference';
@@ -11301,29 +11240,27 @@ export type InfrastructureEditMutationsRelationDeleteArgs = {
   toId: Scalars['StixRef']['input'];
 };
 
-export enum InfrastructuresOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Created = 'created',
-  CreatedBy = 'createdBy',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  FirstSeen = 'first_seen',
-  InfrastructureTypes = 'infrastructure_types',
-  LastSeen = 'last_seen',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectMarking = 'objectMarking',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type InfrastructuresOrdering =
+  | '_score'
+  | 'confidence'
+  | 'created'
+  | 'createdBy'
+  | 'created_at'
+  | 'creator'
+  | 'first_seen'
+  | 'infrastructure_types'
+  | 'last_seen'
+  | 'modified'
+  | 'name'
+  | 'objectMarking'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
-export enum IngestionAuthType {
-  Basic = 'basic',
-  Bearer = 'bearer',
-  Certificate = 'certificate',
-  None = 'none'
-}
+export type IngestionAuthType =
+  | 'basic'
+  | 'bearer'
+  | 'certificate'
+  | 'none';
 
 export type IngestionCsv = BasicObject & InternalObject & {
   __typename?: 'IngestionCsv';
@@ -11387,19 +11324,17 @@ export type IngestionCsvEdge = {
   node: IngestionCsv;
 };
 
-export enum IngestionCsvMapperType {
-  Id = 'id',
-  Inline = 'inline'
-}
+export type IngestionCsvMapperType =
+  | 'id'
+  | 'inline';
 
-export enum IngestionCsvOrdering {
-  Score = '_score',
-  CreatedAt = 'created_at',
-  Mapper = 'mapper',
-  Name = 'name',
-  UpdatedAt = 'updated_at',
-  Uri = 'uri'
-}
+export type IngestionCsvOrdering =
+  | '_score'
+  | 'created_at'
+  | 'mapper'
+  | 'name'
+  | 'updated_at'
+  | 'uri';
 
 export type IngestionHeader = {
   __typename?: 'IngestionHeader';
@@ -11470,14 +11405,13 @@ export type IngestionJsonEdge = {
   node: IngestionJson;
 };
 
-export enum IngestionJsonOrdering {
-  Score = '_score',
-  CreatedAt = 'created_at',
-  Mapper = 'mapper',
-  Name = 'name',
-  UpdatedAt = 'updated_at',
-  Uri = 'uri'
-}
+export type IngestionJsonOrdering =
+  | '_score'
+  | 'created_at'
+  | 'mapper'
+  | 'name'
+  | 'updated_at'
+  | 'uri';
 
 export type IngestionQueryAttribute = {
   __typename?: 'IngestionQueryAttribute';
@@ -11536,13 +11470,12 @@ export type IngestionRssEdge = {
   node: IngestionRss;
 };
 
-export enum IngestionRssOrdering {
-  Score = '_score',
-  CreatedAt = 'created_at',
-  Name = 'name',
-  UpdatedAt = 'updated_at',
-  Uri = 'uri'
-}
+export type IngestionRssOrdering =
+  | '_score'
+  | 'created_at'
+  | 'name'
+  | 'updated_at'
+  | 'uri';
 
 export type IngestionTaxii = BasicObject & InternalObject & {
   __typename?: 'IngestionTaxii';
@@ -11619,12 +11552,11 @@ export type IngestionTaxiiCollectionEdge = {
   node: IngestionTaxiiCollection;
 };
 
-export enum IngestionTaxiiCollectionOrdering {
-  Score = '_score',
-  CreatedAt = 'created_at',
-  Name = 'name',
-  UpdatedAt = 'updated_at'
-}
+export type IngestionTaxiiCollectionOrdering =
+  | '_score'
+  | 'created_at'
+  | 'name'
+  | 'updated_at';
 
 export type IngestionTaxiiConnection = {
   __typename?: 'IngestionTaxiiConnection';
@@ -11638,14 +11570,13 @@ export type IngestionTaxiiEdge = {
   node: IngestionTaxii;
 };
 
-export enum IngestionTaxiiOrdering {
-  Score = '_score',
-  CreatedAt = 'created_at',
-  Name = 'name',
-  UpdatedAt = 'updated_at',
-  Uri = 'uri',
-  Version = 'version'
-}
+export type IngestionTaxiiOrdering =
+  | '_score'
+  | 'created_at'
+  | 'name'
+  | 'updated_at'
+  | 'uri'
+  | 'version';
 
 export type InternalObject = {
   entity_type: Scalars['String']['output'];
@@ -11950,19 +11881,18 @@ export type IntrusionSetEditMutationsRelationDeleteArgs = {
   toId: Scalars['StixRef']['input'];
 };
 
-export enum IntrusionSetsOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectMarking = 'objectMarking',
-  PrimaryMotivation = 'primary_motivation',
-  ResourceLevel = 'resource_level',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type IntrusionSetsOrdering =
+  | '_score'
+  | 'confidence'
+  | 'created'
+  | 'created_at'
+  | 'modified'
+  | 'name'
+  | 'objectMarking'
+  | 'primary_motivation'
+  | 'resource_level'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type JsonAttributeColumnConfiguration = {
   pattern_date?: Maybe<Scalars['String']['output']>;
@@ -12025,10 +11955,9 @@ export type JsonMapperEdge = {
   node: JsonMapper;
 };
 
-export enum JsonMapperOrdering {
-  Score = '_score',
-  Name = 'name'
-}
+export type JsonMapperOrdering =
+  | '_score'
+  | 'name';
 
 export type JsonMapperRepresentation = {
   __typename?: 'JsonMapperRepresentation';
@@ -12057,10 +11986,9 @@ export type JsonMapperRepresentationTarget = {
   path: Scalars['String']['output'];
 };
 
-export enum JsonMapperRepresentationType {
-  Entity = 'entity',
-  Relationship = 'relationship'
-}
+export type JsonMapperRepresentationType =
+  | 'entity'
+  | 'relationship';
 
 export type JsonMapperTestResult = {
   __typename?: 'JsonMapperTestResult';
@@ -12154,16 +12082,15 @@ export type KillChainPhaseEditMutationsRelationDeleteArgs = {
   toId: Scalars['StixRef']['input'];
 };
 
-export enum KillChainPhasesOrdering {
-  Score = '_score',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  KillChainName = 'kill_chain_name',
-  Modified = 'modified',
-  PhaseName = 'phase_name',
-  UpdatedAt = 'updated_at',
-  XOpenctiOrder = 'x_opencti_order'
-}
+export type KillChainPhasesOrdering =
+  | '_score'
+  | 'created'
+  | 'created_at'
+  | 'kill_chain_name'
+  | 'modified'
+  | 'phase_name'
+  | 'updated_at'
+  | 'x_opencti_order';
 
 export type Label = BasicObject & StixMetaObject & StixObject & {
   __typename?: 'Label';
@@ -12229,15 +12156,14 @@ export type LabelEditMutationsFieldPatchArgs = {
   input: Array<InputMaybe<EditInput>>;
 };
 
-export enum LabelsOrdering {
-  Score = '_score',
-  Color = 'color',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Modified = 'modified',
-  UpdatedAt = 'updated_at',
-  Value = 'value'
-}
+export type LabelsOrdering =
+  | '_score'
+  | 'color'
+  | 'created'
+  | 'created_at'
+  | 'modified'
+  | 'updated_at'
+  | 'value';
 
 export type Language = BasicObject & StixCoreObject & StixDomainObject & StixObject & {
   __typename?: 'Language';
@@ -12466,17 +12392,16 @@ export type LanguageEdge = {
   node: Language;
 };
 
-export enum LanguagesOrdering {
-  Score = '_score',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectLabel = 'objectLabel',
-  ObjectMarking = 'objectMarking',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type LanguagesOrdering =
+  | '_score'
+  | 'created'
+  | 'created_at'
+  | 'modified'
+  | 'name'
+  | 'objectLabel'
+  | 'objectMarking'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type ListTask = BackgroundTask & {
   __typename?: 'ListTask';
@@ -12771,17 +12696,16 @@ export type LocationEditMutationsRelationDeleteArgs = {
   toId: Scalars['StixRef']['input'];
 };
 
-export enum LocationsOrdering {
-  Score = '_score',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Latitude = 'latitude',
-  Longitude = 'longitude',
-  Modified = 'modified',
-  Name = 'name',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type LocationsOrdering =
+  | '_score'
+  | 'created'
+  | 'created_at'
+  | 'latitude'
+  | 'longitude'
+  | 'modified'
+  | 'name'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type Log = {
   __typename?: 'Log';
@@ -12815,14 +12739,13 @@ export type LogsConnectorStatusInput = {
   logs: Array<Scalars['String']['input']>;
 };
 
-export enum LogsOrdering {
-  Score = '_score',
-  CreatedAt = 'created_at',
-  Event = 'event',
-  EventScope = 'event_scope',
-  EventType = 'event_type',
-  Timestamp = 'timestamp'
-}
+export type LogsOrdering =
+  | '_score'
+  | 'created_at'
+  | 'event'
+  | 'event_scope'
+  | 'event_type'
+  | 'timestamp';
 
 export type LogsWorkerConfig = {
   __typename?: 'LogsWorkerConfig';
@@ -13269,19 +13192,18 @@ export type MalwareAddInput = {
   x_opencti_workflow_id?: InputMaybe<Scalars['String']['input']>;
 };
 
-export enum MalwareAnalysesOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  CreatedBy = 'createdBy',
-  Creator = 'creator',
-  ObjectLabel = 'objectLabel',
-  ObjectMarking = 'objectMarking',
-  OperatingSystem = 'operatingSystem',
-  Product = 'product',
-  ResultName = 'result_name',
-  Submitted = 'submitted',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type MalwareAnalysesOrdering =
+  | '_score'
+  | 'confidence'
+  | 'createdBy'
+  | 'creator'
+  | 'objectLabel'
+  | 'objectMarking'
+  | 'operatingSystem'
+  | 'product'
+  | 'result_name'
+  | 'submitted'
+  | 'x_opencti_workflow_id';
 
 export type MalwareAnalysis = BasicObject & StixCoreObject & StixDomainObject & StixObject & {
   __typename?: 'MalwareAnalysis';
@@ -13585,22 +13507,21 @@ export type MalwareEditMutationsRelationDeleteArgs = {
   toId: Scalars['StixRef']['input'];
 };
 
-export enum MalwaresOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  FirstSeen = 'first_seen',
-  IsFamily = 'is_family',
-  LastSeen = 'last_seen',
-  MalwareTypes = 'malware_types',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectLabel = 'objectLabel',
-  ObjectMarking = 'objectMarking',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type MalwaresOrdering =
+  | '_score'
+  | 'confidence'
+  | 'created'
+  | 'created_at'
+  | 'first_seen'
+  | 'is_family'
+  | 'last_seen'
+  | 'malware_types'
+  | 'modified'
+  | 'name'
+  | 'objectLabel'
+  | 'objectMarking'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type ManagedConnector = BasicObject & InternalObject & {
   __typename?: 'ManagedConnector';
@@ -13744,17 +13665,16 @@ export type MarkingDefinitionShort = {
   x_opencti_order: Scalars['Int']['output'];
 };
 
-export enum MarkingDefinitionsOrdering {
-  Score = '_score',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Definition = 'definition',
-  DefinitionType = 'definition_type',
-  Modified = 'modified',
-  UpdatedAt = 'updated_at',
-  XOpenctiColor = 'x_opencti_color',
-  XOpenctiOrder = 'x_opencti_order'
-}
+export type MarkingDefinitionsOrdering =
+  | '_score'
+  | 'created'
+  | 'created_at'
+  | 'definition'
+  | 'definition_type'
+  | 'modified'
+  | 'updated_at'
+  | 'x_opencti_color'
+  | 'x_opencti_order';
 
 export type MeOrganization = {
   __typename?: 'MeOrganization';
@@ -14086,11 +14006,10 @@ export type MemberGroupRestriction = {
   name: Scalars['String']['output'];
 };
 
-export enum MemberType {
-  Group = 'Group',
-  Organization = 'Organization',
-  User = 'User'
-}
+export type MemberType =
+  | 'Group'
+  | 'Organization'
+  | 'User';
 
 export type MessagesStats = {
   __typename?: 'MessagesStats';
@@ -17365,18 +17284,17 @@ export type NarrativeEdge = {
   node: Narrative;
 };
 
-export enum NarrativesOrdering {
-  Score = '_score',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Modified = 'modified',
-  Name = 'name',
-  NarrativeTypes = 'narrative_types',
-  ObjectLabel = 'objectLabel',
-  ObjectMarking = 'objectMarking',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type NarrativesOrdering =
+  | '_score'
+  | 'created'
+  | 'created_at'
+  | 'modified'
+  | 'name'
+  | 'narrative_types'
+  | 'objectLabel'
+  | 'objectMarking'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type NetworkTraffic = BasicObject & StixCoreObject & StixCyberObservable & StixObject & {
   __typename?: 'NetworkTraffic';
@@ -17929,19 +17847,18 @@ export type NoteUserAddInput = {
   x_opencti_stix_ids?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-export enum NotesOrdering {
-  Score = '_score',
-  AttributeAbstract = 'attribute_abstract',
-  Created = 'created',
-  CreatedBy = 'createdBy',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  Modified = 'modified',
-  NoteTypes = 'note_types',
-  ObjectMarking = 'objectMarking',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type NotesOrdering =
+  | '_score'
+  | 'attribute_abstract'
+  | 'created'
+  | 'createdBy'
+  | 'created_at'
+  | 'creator'
+  | 'modified'
+  | 'note_types'
+  | 'objectMarking'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type Notification = BasicObject & InternalObject & {
   __typename?: 'Notification';
@@ -17990,11 +17907,10 @@ export type NotificationEvent = {
   operation: Scalars['String']['output'];
 };
 
-export enum NotificationsOrdering {
-  Score = '_score',
-  Created = 'created',
-  Name = 'name'
-}
+export type NotificationsOrdering =
+  | '_score'
+  | 'created'
+  | 'name';
 
 export type Notifier = BasicObject & InternalObject & {
   __typename?: 'Notifier';
@@ -18042,12 +17958,11 @@ export type NotifierEdge = {
   node: Notifier;
 };
 
-export enum NotifierOrdering {
-  Score = '_score',
-  Connector = 'connector',
-  Created = 'created',
-  Name = 'name'
-}
+export type NotifierOrdering =
+  | '_score'
+  | 'connector'
+  | 'created'
+  | 'name';
 
 export type NotifierParameter = {
   __typename?: 'NotifierParameter';
@@ -18388,20 +18303,19 @@ export type ObservedDataEditMutationsRelationDeleteArgs = {
   toId: Scalars['StixRef']['input'];
 };
 
-export enum ObservedDatasOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Created = 'created',
-  CreatedBy = 'createdBy',
-  CreatedAt = 'created_at',
-  FirstObserved = 'first_observed',
-  LastObserved = 'last_observed',
-  Modified = 'modified',
-  NumberObserved = 'number_observed',
-  ObjectMarking = 'objectMarking',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type ObservedDatasOrdering =
+  | '_score'
+  | 'confidence'
+  | 'created'
+  | 'createdBy'
+  | 'created_at'
+  | 'first_observed'
+  | 'last_observed'
+  | 'modified'
+  | 'number_observed'
+  | 'objectMarking'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type OpenCtiFile = {
   __typename?: 'OpenCtiFile';
@@ -18747,24 +18661,22 @@ export type OpinionsMetrics = {
   total?: Maybe<Scalars['Int']['output']>;
 };
 
-export enum OpinionsOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Created = 'created',
-  CreatedBy = 'createdBy',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  Modified = 'modified',
-  ObjectMarking = 'objectMarking',
-  Opinion = 'opinion',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type OpinionsOrdering =
+  | '_score'
+  | 'confidence'
+  | 'created'
+  | 'createdBy'
+  | 'created_at'
+  | 'creator'
+  | 'modified'
+  | 'objectMarking'
+  | 'opinion'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
-export enum OrderingMode {
-  Asc = 'asc',
-  Desc = 'desc'
-}
+export type OrderingMode =
+  | 'asc'
+  | 'desc';
 
 export type Organization = BasicObject & Identity & StixCoreObject & StixDomainObject & StixObject & {
   __typename?: 'Organization';
@@ -19030,18 +18942,17 @@ export type OrganizationEdge = {
 
 export type OrganizationOrIndividual = Individual | Organization;
 
-export enum OrganizationsOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Modified = 'modified',
-  Name = 'name',
-  UpdatedAt = 'updated_at',
-  XOpenctiOrganizationType = 'x_opencti_organization_type',
-  XOpenctiScore = 'x_opencti_score',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type OrganizationsOrdering =
+  | '_score'
+  | 'confidence'
+  | 'created'
+  | 'created_at'
+  | 'modified'
+  | 'name'
+  | 'updated_at'
+  | 'x_opencti_organization_type'
+  | 'x_opencti_score'
+  | 'x_opencti_workflow_id';
 
 export type OtpElement = {
   __typename?: 'OtpElement';
@@ -19063,11 +18974,10 @@ export type OverviewWidgetCustomization = {
   width: Scalars['Int']['output'];
 };
 
-export enum PackageStatus {
-  InError = 'IN_ERROR',
-  InProgress = 'IN_PROGRESS',
-  Ready = 'READY'
-}
+export type PackageStatus =
+  | 'IN_ERROR'
+  | 'IN_PROGRESS'
+  | 'READY';
 
 export type PageInfo = {
   __typename?: 'PageInfo';
@@ -19762,23 +19672,21 @@ export type PirFlagElementInput = {
   sourceId: Scalars['ID']['input'];
 };
 
-export enum PirOrdering {
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  Name = 'name',
-  UpdatedAt = 'updated_at'
-}
+export type PirOrdering =
+  | 'created_at'
+  | 'creator'
+  | 'name'
+  | 'updated_at';
 
 export type PirUnflagElementInput = {
   relationshipId: Scalars['ID']['input'];
   sourceId: Scalars['ID']['input'];
 };
 
-export enum Platform {
-  Linux = 'Linux',
-  MacOs = 'MacOS',
-  Windows = 'Windows'
-}
+export type Platform =
+  | 'Linux'
+  | 'MacOS'
+  | 'Windows';
 
 export type PlatformCriticalAlert = {
   __typename?: 'PlatformCriticalAlert';
@@ -19792,9 +19700,8 @@ export type PlatformCriticalAlertDetails = {
   groups: Array<Group>;
 };
 
-export enum PlatformCriticalAlertType {
-  GroupWithNullConfidenceLevel = 'GROUP_WITH_NULL_CONFIDENCE_LEVEL'
-}
+export type PlatformCriticalAlertType =
+  | 'GROUP_WITH_NULL_CONFIDENCE_LEVEL';
 
 export type PlatformEe = {
   __typename?: 'PlatformEE';
@@ -19921,11 +19828,10 @@ export type PlaybookInsertResult = {
   nodeId: Scalars['String']['output'];
 };
 
-export enum PlaybooksOrdering {
-  Score = '_score',
-  Name = 'name',
-  PlaybookRunning = 'playbook_running'
-}
+export type PlaybooksOrdering =
+  | '_score'
+  | 'name'
+  | 'playbook_running';
 
 export type Position = BasicObject & Location & StixCoreObject & StixDomainObject & StixObject & {
   __typename?: 'Position';
@@ -20205,17 +20111,16 @@ export type PositionInput = {
   y: Scalars['Float']['input'];
 };
 
-export enum PositionsOrdering {
-  Score = '_score',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Modified = 'modified',
-  Name = 'name',
-  PostalAddress = 'postal_address',
-  PostalCode = 'postal_code',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type PositionsOrdering =
+  | '_score'
+  | 'created'
+  | 'created_at'
+  | 'modified'
+  | 'name'
+  | 'postal_address'
+  | 'postal_code'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type Process = BasicObject & StixCoreObject & StixCyberObservable & StixObject & {
   __typename?: 'Process';
@@ -20508,16 +20413,15 @@ export type PublicDashboardEdge = {
   node: PublicDashboard;
 };
 
-export enum PublicDashboardsOrdering {
-  Score = '_score',
-  CreatedAt = 'created_at',
-  Dashboard = 'dashboard',
-  Enabled = 'enabled',
-  Name = 'name',
-  UpdatedAt = 'updated_at',
-  UriKey = 'uri_key',
-  UserId = 'user_id'
-}
+export type PublicDashboardsOrdering =
+  | '_score'
+  | 'created_at'
+  | 'dashboard'
+  | 'enabled'
+  | 'name'
+  | 'updated_at'
+  | 'uri_key'
+  | 'user_id';
 
 export type PublicDistribution = {
   __typename?: 'PublicDistribution';
@@ -24082,15 +23986,14 @@ export type RegionEditMutationsRelationDeleteArgs = {
   toId: Scalars['StixRef']['input'];
 };
 
-export enum RegionsOrdering {
-  Score = '_score',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Modified = 'modified',
-  Name = 'name',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type RegionsOrdering =
+  | '_score'
+  | 'created'
+  | 'created_at'
+  | 'modified'
+  | 'name'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type RegisterConnectorInput = {
   auto?: InputMaybe<Scalars['Boolean']['input']>;
@@ -24443,20 +24346,19 @@ export type ReportEditMutationsRelationDeleteArgs = {
   toId: Scalars['StixRef']['input'];
 };
 
-export enum ReportsOrdering {
-  Score = '_score',
-  Created = 'created',
-  CreatedBy = 'createdBy',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectMarking = 'objectMarking',
-  Published = 'published',
-  ReportTypes = 'report_types',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type ReportsOrdering =
+  | '_score'
+  | 'created'
+  | 'createdBy'
+  | 'created_at'
+  | 'creator'
+  | 'modified'
+  | 'name'
+  | 'objectMarking'
+  | 'published'
+  | 'report_types'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type Representative = {
   __typename?: 'Representative';
@@ -24506,9 +24408,8 @@ export type RequestAccessStatus = {
   template_id?: Maybe<Scalars['String']['output']>;
 };
 
-export enum RequestAccessType {
-  OrganizationSharing = 'organization_sharing'
-}
+export type RequestAccessType =
+  | 'organization_sharing';
 
 export type RequestAccessWorkflow = {
   __typename?: 'RequestAccessWorkflow';
@@ -24574,26 +24475,23 @@ export type RetentionRuleEditMutationsFieldPatchArgs = {
   input: Array<InputMaybe<EditInput>>;
 };
 
-export enum RetentionRuleOrdering {
-  Score = '_score',
-  LastExecutionDate = 'last_execution_date',
-  MaxRetention = 'max_retention',
-  Name = 'name',
-  RemainingCount = 'remaining_count',
-  Scope = 'scope'
-}
+export type RetentionRuleOrdering =
+  | '_score'
+  | 'last_execution_date'
+  | 'max_retention'
+  | 'name'
+  | 'remaining_count'
+  | 'scope';
 
-export enum RetentionRuleScope {
-  File = 'file',
-  Knowledge = 'knowledge',
-  Workbench = 'workbench'
-}
+export type RetentionRuleScope =
+  | 'file'
+  | 'knowledge'
+  | 'workbench';
 
-export enum RetentionUnit {
-  Days = 'days',
-  Hours = 'hours',
-  Minutes = 'minutes'
-}
+export type RetentionUnit =
+  | 'days'
+  | 'hours'
+  | 'minutes';
 
 export type RfiRequestAccessConfiguration = {
   __typename?: 'RfiRequestAccessConfiguration';
@@ -24665,12 +24563,11 @@ export type RoleEditMutationsRelationDeleteArgs = {
   toId: Scalars['StixRef']['input'];
 };
 
-export enum RolesOrdering {
-  Score = '_score',
-  CreatedAt = 'created_at',
-  Name = 'name',
-  UpdatedAt = 'updated_at'
-}
+export type RolesOrdering =
+  | '_score'
+  | 'created_at'
+  | 'name'
+  | 'updated_at';
 
 export type Rule = {
   __typename?: 'Rule';
@@ -24744,10 +24641,9 @@ export type SavedFilterEdge = {
   node: SavedFilter;
 };
 
-export enum SavedFilterOrdering {
-  Score = '_score',
-  Name = 'name'
-}
+export type SavedFilterOrdering =
+  | '_score'
+  | 'name';
 
 export type ScaleAttribute = {
   __typename?: 'ScaleAttribute';
@@ -24755,11 +24651,10 @@ export type ScaleAttribute = {
   scale: Scalars['String']['output'];
 };
 
-export enum ScenarioType {
-  Container = 'container',
-  Threat = 'threat',
-  Victim = 'victim'
-}
+export type ScenarioType =
+  | 'container'
+  | 'threat'
+  | 'victim';
 
 export type SearchMetrics = {
   __typename?: 'SearchMetrics';
@@ -25040,16 +24935,15 @@ export type SectorEditMutationsRelationDeleteArgs = {
   toId: Scalars['StixRef']['input'];
 };
 
-export enum SectorsOrdering {
-  Score = '_score',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectMarking = 'objectMarking',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type SectorsOrdering =
+  | '_score'
+  | 'created'
+  | 'created_at'
+  | 'modified'
+  | 'name'
+  | 'objectMarking'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type SecurityPlatform = BasicObject & Identity & StixCoreObject & StixDomainObject & StixObject & {
   __typename?: 'SecurityPlatform';
@@ -25282,21 +25176,19 @@ export type SecurityPlatformEdge = {
   node: SecurityPlatform;
 };
 
-export enum SecurityPlatformOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Modified = 'modified',
-  Name = 'name',
-  SecurityPlatformType = 'security_platform_type',
-  UpdatedAt = 'updated_at'
-}
+export type SecurityPlatformOrdering =
+  | '_score'
+  | 'confidence'
+  | 'created'
+  | 'created_at'
+  | 'modified'
+  | 'name'
+  | 'security_platform_type'
+  | 'updated_at';
 
-export enum Selection {
-  Multiple = 'multiple',
-  Random = 'random'
-}
+export type Selection =
+  | 'multiple'
+  | 'random';
 
 export type SendUserMailInput = {
   email_template_id: Scalars['ID']['input'];
@@ -25455,11 +25347,10 @@ export type SimulationConfig = {
   simulationType: SimulationType;
 };
 
-export enum SimulationType {
-  Mixed = 'mixed',
-  Simulated = 'simulated',
-  Technical = 'technical'
-}
+export type SimulationType =
+  | 'mixed'
+  | 'simulated'
+  | 'technical';
 
 export type SimulationsResult = {
   __typename?: 'SimulationsResult';
@@ -25690,17 +25581,15 @@ export type SoftwareEdge = {
   node: Software;
 };
 
-export enum State {
-  Complete = 'complete',
-  Progress = 'progress',
-  Timeout = 'timeout',
-  Wait = 'wait'
-}
+export type State =
+  | 'complete'
+  | 'progress'
+  | 'timeout'
+  | 'wait';
 
-export enum StatsOperation {
-  Count = 'count',
-  Sum = 'sum'
-}
+export type StatsOperation =
+  | 'count'
+  | 'sum';
 
 export type Status = {
   __typename?: 'Status';
@@ -25731,16 +25620,14 @@ export type StatusEdge = {
   node: Status;
 };
 
-export enum StatusOrdering {
-  Score = '_score',
-  Order = 'order',
-  Type = 'type'
-}
+export type StatusOrdering =
+  | '_score'
+  | 'order'
+  | 'type';
 
-export enum StatusScope {
-  Global = 'GLOBAL',
-  RequestAccess = 'REQUEST_ACCESS'
-}
+export type StatusScope =
+  | 'GLOBAL'
+  | 'REQUEST_ACCESS';
 
 export type StatusTemplate = {
   __typename?: 'StatusTemplate';
@@ -25768,10 +25655,9 @@ export type StatusTemplateEdge = {
   node: StatusTemplate;
 };
 
-export enum StatusTemplateOrdering {
-  Score = '_score',
-  Name = 'name'
-}
+export type StatusTemplateOrdering =
+  | '_score'
+  | 'name';
 
 export type StixCoreObject = {
   cases?: Maybe<CaseConnection>;
@@ -26109,35 +25995,34 @@ export type StixCoreObjectsNumberParameters = {
   types?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-export enum StixCoreObjectsOrdering {
-  Score = '_score',
-  AuthorizedMembersActivationDate = 'authorized_members_activation_date',
-  Created = 'created',
-  CreatedBy = 'createdBy',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  EntityType = 'entity_type',
-  FirstSeen = 'first_seen',
-  IndicatorPattern = 'indicator_pattern',
-  LastSeen = 'last_seen',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectMarking = 'objectMarking',
-  ObservableValue = 'observable_value',
-  OpinionsMetricsMax = 'opinions_metrics_max',
-  OpinionsMetricsMean = 'opinions_metrics_mean',
-  OpinionsMetricsMin = 'opinions_metrics_min',
-  OpinionsMetricsTotal = 'opinions_metrics_total',
-  Published = 'published',
-  StartTime = 'start_time',
-  StopTime = 'stop_time',
-  Subject = 'subject',
-  UpdatedAt = 'updated_at',
-  ValidFrom = 'valid_from',
-  ValidUntil = 'valid_until',
-  Value = 'value',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type StixCoreObjectsOrdering =
+  | '_score'
+  | 'authorized_members_activation_date'
+  | 'created'
+  | 'createdBy'
+  | 'created_at'
+  | 'creator'
+  | 'entity_type'
+  | 'first_seen'
+  | 'indicator_pattern'
+  | 'last_seen'
+  | 'modified'
+  | 'name'
+  | 'objectMarking'
+  | 'observable_value'
+  | 'opinions_metrics_max'
+  | 'opinions_metrics_mean'
+  | 'opinions_metrics_min'
+  | 'opinions_metrics_total'
+  | 'published'
+  | 'start_time'
+  | 'stop_time'
+  | 'subject'
+  | 'updated_at'
+  | 'valid_from'
+  | 'valid_until'
+  | 'value'
+  | 'x_opencti_workflow_id';
 
 export type StixCoreObjectsTimeSeriesParameters = {
   field: Scalars['String']['input'];
@@ -26391,29 +26276,28 @@ export type StixCoreRelationshipsExportAskInput = {
   toTypes?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-export enum StixCoreRelationshipsOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Created = 'created',
-  CreatedBy = 'createdBy',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  EntityType = 'entity_type',
-  KillChainPhase = 'killChainPhase',
-  Modified = 'modified',
-  ObjectLabel = 'objectLabel',
-  ObjectMarking = 'objectMarking',
-  RelationshipType = 'relationship_type',
-  StartTime = 'start_time',
-  StopTime = 'stop_time',
-  ToName = 'toName',
-  ToObservableValue = 'toObservableValue',
-  ToPatternType = 'toPatternType',
-  ToValidFrom = 'toValidFrom',
-  ToValidUntil = 'toValidUntil',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type StixCoreRelationshipsOrdering =
+  | '_score'
+  | 'confidence'
+  | 'created'
+  | 'createdBy'
+  | 'created_at'
+  | 'creator'
+  | 'entity_type'
+  | 'killChainPhase'
+  | 'modified'
+  | 'objectLabel'
+  | 'objectMarking'
+  | 'relationship_type'
+  | 'start_time'
+  | 'stop_time'
+  | 'toName'
+  | 'toObservableValue'
+  | 'toPatternType'
+  | 'toValidFrom'
+  | 'toValidUntil'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type StixCoreRelationshipsTimeSeriesParameters = {
   confidences?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
@@ -26713,16 +26597,15 @@ export type StixCyberObservablesExportAskInput = {
   selectedIds?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-export enum StixCyberObservablesOrdering {
-  Score = '_score',
-  CreatedBy = 'createdBy',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  EntityType = 'entity_type',
-  ObjectMarking = 'objectMarking',
-  ObservableValue = 'observable_value',
-  UpdatedAt = 'updated_at'
-}
+export type StixCyberObservablesOrdering =
+  | '_score'
+  | 'createdBy'
+  | 'created_at'
+  | 'creator'
+  | 'entity_type'
+  | 'objectMarking'
+  | 'observable_value'
+  | 'updated_at';
 
 export type StixDomainObject = {
   avatar?: Maybe<OpenCtiFile>;
@@ -27039,50 +26922,49 @@ export type StixDomainObjectFileEditInput = {
   order?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export enum StixDomainObjectsOrdering {
-  Score = '_score',
-  AttributeAbstract = 'attribute_abstract',
-  AttributeCount = 'attribute_count',
-  ChannelTypes = 'channel_types',
-  Confidence = 'confidence',
-  Context = 'context',
-  Created = 'created',
-  CreatedBy = 'createdBy',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  EntityType = 'entity_type',
-  EventTypes = 'event_types',
-  FirstObserved = 'first_observed',
-  FirstSeen = 'first_seen',
-  IncidentType = 'incident_type',
-  IndicatorPattern = 'indicator_pattern',
-  LastObserved = 'last_observed',
-  LastSeen = 'last_seen',
-  Modified = 'modified',
-  Name = 'name',
-  NoteTypes = 'note_types',
-  NumberObserved = 'number_observed',
-  ObjectMarking = 'objectMarking',
-  OperatingSystem = 'operatingSystem',
-  Opinion = 'opinion',
-  PatternType = 'pattern_type',
-  Priority = 'priority',
-  Product = 'product',
-  Published = 'published',
-  Rating = 'rating',
-  ReportTypes = 'report_types',
-  ResultName = 'result_name',
-  Severity = 'severity',
-  Submitted = 'submitted',
-  UpdatedAt = 'updated_at',
-  ValidFrom = 'valid_from',
-  ValidUntil = 'valid_until',
-  XOpenctiBaseSeverity = 'x_opencti_base_severity',
-  XOpenctiCvssBaseSeverity = 'x_opencti_cvss_base_severity',
-  XOpenctiNegative = 'x_opencti_negative',
-  XOpenctiOrganizationType = 'x_opencti_organization_type',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type StixDomainObjectsOrdering =
+  | '_score'
+  | 'attribute_abstract'
+  | 'attribute_count'
+  | 'channel_types'
+  | 'confidence'
+  | 'context'
+  | 'created'
+  | 'createdBy'
+  | 'created_at'
+  | 'creator'
+  | 'entity_type'
+  | 'event_types'
+  | 'first_observed'
+  | 'first_seen'
+  | 'incident_type'
+  | 'indicator_pattern'
+  | 'last_observed'
+  | 'last_seen'
+  | 'modified'
+  | 'name'
+  | 'note_types'
+  | 'number_observed'
+  | 'objectMarking'
+  | 'operatingSystem'
+  | 'opinion'
+  | 'pattern_type'
+  | 'priority'
+  | 'product'
+  | 'published'
+  | 'rating'
+  | 'report_types'
+  | 'result_name'
+  | 'severity'
+  | 'submitted'
+  | 'updated_at'
+  | 'valid_from'
+  | 'valid_until'
+  | 'x_opencti_base_severity'
+  | 'x_opencti_cvss_base_severity'
+  | 'x_opencti_negative'
+  | 'x_opencti_organization_type'
+  | 'x_opencti_workflow_id';
 
 export type StixEditMutations = {
   __typename?: 'StixEditMutations';
@@ -27357,15 +27239,14 @@ export type StixMetaObjectEdge = {
   node: StixMetaObject;
 };
 
-export enum StixMetaObjectsOrdering {
-  Score = '_score',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  EntityType = 'entity_type',
-  Modified = 'modified',
-  SpecVersion = 'spec_version',
-  UpdatedAt = 'updated_at'
-}
+export type StixMetaObjectsOrdering =
+  | '_score'
+  | 'created'
+  | 'created_at'
+  | 'entity_type'
+  | 'modified'
+  | 'spec_version'
+  | 'updated_at';
 
 export type StixObject = {
   created_at: Scalars['DateTime']['output'];
@@ -27412,22 +27293,21 @@ export type StixObjectOrStixRelationshipRefEdge = {
   types: Array<Maybe<Scalars['String']['output']>>;
 };
 
-export enum StixObjectOrStixRelationshipsOrdering {
-  Score = '_score',
-  Created = 'created',
-  CreatedBy = 'createdBy',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  EntityType = 'entity_type',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectLabel = 'objectLabel',
-  ObjectMarking = 'objectMarking',
-  ObservableValue = 'observable_value',
-  RelationshipType = 'relationship_type',
-  StartTime = 'start_time',
-  UpdatedAt = 'updated_at'
-}
+export type StixObjectOrStixRelationshipsOrdering =
+  | '_score'
+  | 'created'
+  | 'createdBy'
+  | 'created_at'
+  | 'creator'
+  | 'entity_type'
+  | 'modified'
+  | 'name'
+  | 'objectLabel'
+  | 'objectMarking'
+  | 'observable_value'
+  | 'relationship_type'
+  | 'start_time'
+  | 'updated_at';
 
 export type StixObjectSimulationsResult = {
   __typename?: 'StixObjectSimulationsResult';
@@ -27563,24 +27443,23 @@ export type StixRefRelationshipsAddInput = {
   toIds: Array<Scalars['StixRef']['input']>;
 };
 
-export enum StixRefRelationshipsOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  EntityType = 'entity_type',
-  Modified = 'modified',
-  PirScore = 'pir_score',
-  RelationshipType = 'relationship_type',
-  StartTime = 'start_time',
-  StopTime = 'stop_time',
-  ToCreatedAt = 'toCreatedAt',
-  ToName = 'toName',
-  ToPatternType = 'toPatternType',
-  ToValidFrom = 'toValidFrom',
-  ToValidUntil = 'toValidUntil',
-  UpdatedAt = 'updated_at'
-}
+export type StixRefRelationshipsOrdering =
+  | '_score'
+  | 'confidence'
+  | 'created'
+  | 'created_at'
+  | 'entity_type'
+  | 'modified'
+  | 'pir_score'
+  | 'relationship_type'
+  | 'start_time'
+  | 'stop_time'
+  | 'toCreatedAt'
+  | 'toName'
+  | 'toPatternType'
+  | 'toValidFrom'
+  | 'toValidUntil'
+  | 'updated_at';
 
 export type StixRelationship = {
   confidence?: Maybe<Scalars['Int']['output']>;
@@ -27644,29 +27523,28 @@ export type StixRelationshipSchema = {
   values: Array<Scalars['String']['output']>;
 };
 
-export enum StixRelationshipsOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Created = 'created',
-  CreatedBy = 'createdBy',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  EntityType = 'entity_type',
-  KillChainPhase = 'killChainPhase',
-  Modified = 'modified',
-  ObjectLabel = 'objectLabel',
-  ObjectMarking = 'objectMarking',
-  RelationshipType = 'relationship_type',
-  StartTime = 'start_time',
-  StopTime = 'stop_time',
-  ToName = 'toName',
-  ToObservableValue = 'toObservableValue',
-  ToPatternType = 'toPatternType',
-  ToValidFrom = 'toValidFrom',
-  ToValidUntil = 'toValidUntil',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type StixRelationshipsOrdering =
+  | '_score'
+  | 'confidence'
+  | 'created'
+  | 'createdBy'
+  | 'created_at'
+  | 'creator'
+  | 'entity_type'
+  | 'killChainPhase'
+  | 'modified'
+  | 'objectLabel'
+  | 'objectMarking'
+  | 'relationship_type'
+  | 'start_time'
+  | 'stop_time'
+  | 'toName'
+  | 'toObservableValue'
+  | 'toPatternType'
+  | 'toValidFrom'
+  | 'toValidUntil'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type StixRelationshipsTimeSeriesParameters = {
   confidences?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
@@ -27865,26 +27743,25 @@ export type StixSightingRelationshipsEdge = {
   node: StixSightingRelationship;
 };
 
-export enum StixSightingRelationshipsOrdering {
-  Score = '_score',
-  AttributeCount = 'attribute_count',
-  Confidence = 'confidence',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  FirstSeen = 'first_seen',
-  LastSeen = 'last_seen',
-  Modified = 'modified',
-  ObjectLabel = 'objectLabel',
-  ObjectMarking = 'objectMarking',
-  ToCreatedAt = 'toCreatedAt',
-  ToName = 'toName',
-  ToPatternType = 'toPatternType',
-  ToValidFrom = 'toValidFrom',
-  ToValidUntil = 'toValidUntil',
-  UpdatedAt = 'updated_at',
-  XOpenctiNegative = 'x_opencti_negative',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type StixSightingRelationshipsOrdering =
+  | '_score'
+  | 'attribute_count'
+  | 'confidence'
+  | 'created'
+  | 'created_at'
+  | 'first_seen'
+  | 'last_seen'
+  | 'modified'
+  | 'objectLabel'
+  | 'objectMarking'
+  | 'toCreatedAt'
+  | 'toName'
+  | 'toPatternType'
+  | 'toValidFrom'
+  | 'toValidUntil'
+  | 'updated_at'
+  | 'x_opencti_negative'
+  | 'x_opencti_workflow_id';
 
 export type StreamCollection = {
   __typename?: 'StreamCollection';
@@ -27941,13 +27818,12 @@ export type StreamCollectionEditMutationsFieldPatchArgs = {
   input: Array<InputMaybe<EditInput>>;
 };
 
-export enum StreamCollectionOrdering {
-  Score = '_score',
-  Id = 'id',
-  Name = 'name',
-  StreamLive = 'stream_live',
-  StreamPublic = 'stream_public'
-}
+export type StreamCollectionOrdering =
+  | '_score'
+  | 'id'
+  | 'name'
+  | 'stream_live'
+  | 'stream_public';
 
 export type SubAttackPatternForMatrix = {
   __typename?: 'SubAttackPatternForMatrix';
@@ -28001,10 +27877,9 @@ export type SubTypeEditMutationsStatusFieldPatchArgs = {
   statusId: Scalars['String']['input'];
 };
 
-export enum SubTypesOrdering {
-  Score = '_score',
-  Label = 'label'
-}
+export type SubTypesOrdering =
+  | '_score'
+  | 'label';
 
 export type Subscription = {
   __typename?: 'Subscription';
@@ -28170,11 +28045,10 @@ export type SupportPackageForceZipInput = {
   id: Scalars['String']['input'];
 };
 
-export enum SupportPackageOrdering {
-  CreatedAt = 'created_at',
-  Name = 'name',
-  PackageStatus = 'package_status'
-}
+export type SupportPackageOrdering =
+  | 'created_at'
+  | 'name'
+  | 'package_status';
 
 export type Synchronizer = {
   __typename?: 'Synchronizer';
@@ -28236,15 +28110,14 @@ export type SynchronizerFetchInput = {
   uri: Scalars['String']['input'];
 };
 
-export enum SynchronizersOrdering {
-  Score = '_score',
-  CurrentStateDate = 'current_state_date',
-  Id = 'id',
-  Name = 'name',
-  Running = 'running',
-  StreamId = 'stream_id',
-  Uri = 'uri'
-}
+export type SynchronizersOrdering =
+  | '_score'
+  | 'current_state_date'
+  | 'id'
+  | 'name'
+  | 'running'
+  | 'stream_id'
+  | 'uri';
 
 export type System = BasicObject & Identity & StixCoreObject & StixDomainObject & StixObject & {
   __typename?: 'System';
@@ -28521,16 +28394,15 @@ export type SystemEditMutationsRelationDeleteArgs = {
   toId: Scalars['StixRef']['input'];
 };
 
-export enum SystemsOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Created = 'created',
-  Firstname = 'firstname',
-  Lastname = 'lastname',
-  Modified = 'modified',
-  Name = 'name',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type SystemsOrdering =
+  | '_score'
+  | 'confidence'
+  | 'created'
+  | 'firstname'
+  | 'lastname'
+  | 'modified'
+  | 'name'
+  | 'x_opencti_workflow_id';
 
 export type Task = BasicObject & Container & StixCoreObject & StixDomainObject & StixObject & {
   __typename?: 'Task';
@@ -28828,33 +28700,31 @@ export type TaskTemplateEdge = {
   node: TaskTemplate;
 };
 
-export enum TaskTemplatesOrdering {
-  Score = '_score',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  Description = 'description',
-  Modified = 'modified',
-  Name = 'name',
-  UpdatedAt = 'updated_at'
-}
+export type TaskTemplatesOrdering =
+  | '_score'
+  | 'created'
+  | 'created_at'
+  | 'creator'
+  | 'description'
+  | 'modified'
+  | 'name'
+  | 'updated_at';
 
-export enum TasksOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Context = 'context',
-  Created = 'created',
-  CreatedBy = 'createdBy',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  Description = 'description',
-  DueDate = 'due_date',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectAssignee = 'objectAssignee',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type TasksOrdering =
+  | '_score'
+  | 'confidence'
+  | 'context'
+  | 'created'
+  | 'createdBy'
+  | 'created_at'
+  | 'creator'
+  | 'description'
+  | 'due_date'
+  | 'modified'
+  | 'name'
+  | 'objectAssignee'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type TaxiiCollection = {
   __typename?: 'TaxiiCollection';
@@ -28901,17 +28771,15 @@ export type TaxiiCollectionEditMutationsFieldPatchArgs = {
   input: Array<InputMaybe<EditInput>>;
 };
 
-export enum TaxiiCollectionOrdering {
-  Score = '_score',
-  Id = 'id',
-  Name = 'name'
-}
+export type TaxiiCollectionOrdering =
+  | '_score'
+  | 'id'
+  | 'name';
 
-export enum TaxiiVersion {
-  V1 = 'v1',
-  V2 = 'v2',
-  V21 = 'v21'
-}
+export type TaxiiVersion =
+  | 'v1'
+  | 'v2'
+  | 'v21';
 
 export type Text = BasicObject & StixCoreObject & StixCyberObservable & StixObject & {
   __typename?: 'Text';
@@ -29888,35 +29756,33 @@ export type ThreatActorIndividualEdge = {
   node: ThreatActorIndividual;
 };
 
-export enum ThreatActorsIndividualOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectMarking = 'objectMarking',
-  ResourceLevel = 'resource_level',
-  Sophistication = 'sophistication',
-  ThreatActorTypes = 'threat_actor_types',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type ThreatActorsIndividualOrdering =
+  | '_score'
+  | 'confidence'
+  | 'created'
+  | 'created_at'
+  | 'modified'
+  | 'name'
+  | 'objectMarking'
+  | 'resource_level'
+  | 'sophistication'
+  | 'threat_actor_types'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
-export enum ThreatActorsOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Modified = 'modified',
-  Name = 'name',
-  ObjectMarking = 'objectMarking',
-  ResourceLevel = 'resource_level',
-  Sophistication = 'sophistication',
-  ThreatActorTypes = 'threat_actor_types',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type ThreatActorsOrdering =
+  | '_score'
+  | 'confidence'
+  | 'created'
+  | 'created_at'
+  | 'modified'
+  | 'name'
+  | 'objectMarking'
+  | 'resource_level'
+  | 'sophistication'
+  | 'threat_actor_types'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type TimeSeries = {
   __typename?: 'TimeSeries';
@@ -29924,11 +29790,10 @@ export type TimeSeries = {
   value: Scalars['Int']['output'];
 };
 
-export enum Tone {
-  Operational = 'operational',
-  Strategic = 'strategic',
-  Tactical = 'tactical'
-}
+export type Tone =
+  | 'operational'
+  | 'strategic'
+  | 'tactical';
 
 export type Tool = BasicObject & StixCoreObject & StixDomainObject & StixObject & {
   __typename?: 'Tool';
@@ -30199,16 +30064,15 @@ export type ToolEditMutationsRelationDeleteArgs = {
   toId: Scalars['StixRef']['input'];
 };
 
-export enum ToolsOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Modified = 'modified',
-  Name = 'name',
-  UpdatedAt = 'updated_at',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type ToolsOrdering =
+  | '_score'
+  | 'confidence'
+  | 'created'
+  | 'created_at'
+  | 'modified'
+  | 'name'
+  | 'updated_at'
+  | 'x_opencti_workflow_id';
 
 export type TrackingNumber = BasicObject & StixCoreObject & StixCyberObservable & StixObject & {
   __typename?: 'TrackingNumber';
@@ -30447,13 +30311,12 @@ export type TriggerActivityDigestAddInput = {
   trigger_time?: InputMaybe<Scalars['String']['input']>;
 };
 
-export enum TriggerActivityEventType {
-  Authentication = 'authentication',
-  Command = 'command',
-  File = 'file',
-  Mutation = 'mutation',
-  Read = 'read'
-}
+export type TriggerActivityEventType =
+  | 'authentication'
+  | 'command'
+  | 'file'
+  | 'mutation'
+  | 'read';
 
 export type TriggerActivityLiveAddInput = {
   description?: InputMaybe<Scalars['String']['input']>;
@@ -30485,11 +30348,10 @@ export type TriggerEdge = {
   node: Trigger;
 };
 
-export enum TriggerEventType {
-  Create = 'create',
-  Delete = 'delete',
-  Update = 'update'
-}
+export type TriggerEventType =
+  | 'create'
+  | 'delete'
+  | 'update';
 
 export type TriggerLiveAddInput = {
   description?: InputMaybe<Scalars['String']['input']>;
@@ -30501,19 +30363,17 @@ export type TriggerLiveAddInput = {
   recipients?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
-export enum TriggerType {
-  Digest = 'digest',
-  Live = 'live'
-}
+export type TriggerType =
+  | 'digest'
+  | 'live';
 
-export enum TriggersOrdering {
-  Score = '_score',
-  Created = 'created',
-  EventTypes = 'event_types',
-  Name = 'name',
-  Notifiers = 'notifiers',
-  TriggerType = 'trigger_type'
-}
+export type TriggersOrdering =
+  | '_score'
+  | 'created'
+  | 'event_types'
+  | 'name'
+  | 'notifiers'
+  | 'trigger_type';
 
 export type TypeAttribute = {
   __typename?: 'TypeAttribute';
@@ -30528,11 +30388,10 @@ export type TypeAttribute = {
   type: Scalars['String']['output'];
 };
 
-export enum UnitSystem {
-  Imperial = 'Imperial',
-  Metric = 'Metric',
-  Auto = 'auto'
-}
+export type UnitSystem =
+  | 'Imperial'
+  | 'Metric'
+  | 'auto';
 
 export type UpdateConnectorManagerStatusInput = {
   id: Scalars['ID']['input'];
@@ -31330,22 +31189,20 @@ export type UserStatus = {
   status: Scalars['String']['output'];
 };
 
-export enum UsersOrdering {
-  Score = '_score',
-  CreatedAt = 'created_at',
-  External = 'external',
-  Firstname = 'firstname',
-  Language = 'language',
-  Lastname = 'lastname',
-  Name = 'name',
-  UpdatedAt = 'updated_at',
-  UserEmail = 'user_email'
-}
+export type UsersOrdering =
+  | '_score'
+  | 'created_at'
+  | 'external'
+  | 'firstname'
+  | 'language'
+  | 'lastname'
+  | 'name'
+  | 'updated_at'
+  | 'user_email';
 
-export enum ValidationMode {
-  Draft = 'draft',
-  Workbench = 'workbench'
-}
+export type ValidationMode =
+  | 'draft'
+  | 'workbench';
 
 export type VerifyMfaInput = {
   code: Scalars['String']['input'];
@@ -31402,54 +31259,53 @@ export type VocabularyAddInput = {
   x_opencti_stix_ids?: InputMaybe<Array<InputMaybe<Scalars['StixId']['input']>>>;
 };
 
-export enum VocabularyCategory {
-  AccountTypeOv = 'account_type_ov',
-  AttackMotivationOv = 'attack_motivation_ov',
-  AttackResourceLevelOv = 'attack_resource_level_ov',
-  CasePriorityOv = 'case_priority_ov',
-  CaseSeverityOv = 'case_severity_ov',
-  ChannelTypesOv = 'channel_types_ov',
-  CollectionLayersOv = 'collection_layers_ov',
-  EventTypeOv = 'event_type_ov',
-  EyeColorOv = 'eye_color_ov',
-  GenderOv = 'gender_ov',
-  GroupingContextOv = 'grouping_context_ov',
-  HairColorOv = 'hair_color_ov',
-  ImplementationLanguageOv = 'implementation_language_ov',
-  IncidentResponseTypesOv = 'incident_response_types_ov',
-  IncidentSeverityOv = 'incident_severity_ov',
-  IncidentTypeOv = 'incident_type_ov',
-  IndicatorTypeOv = 'indicator_type_ov',
-  InfrastructureTypeOv = 'infrastructure_type_ov',
-  IntegrityLevelOv = 'integrity_level_ov',
-  MalwareCapabilitiesOv = 'malware_capabilities_ov',
-  MalwareResultOv = 'malware_result_ov',
-  MalwareTypeOv = 'malware_type_ov',
-  MaritalStatusOv = 'marital_status_ov',
-  NoteTypesOv = 'note_types_ov',
-  OpinionOv = 'opinion_ov',
-  OrganizationTypeOv = 'organization_type_ov',
-  PatternTypeOv = 'pattern_type_ov',
-  PermissionsOv = 'permissions_ov',
-  PersonaTypeOv = 'persona_type_ov',
-  PlatformsOv = 'platforms_ov',
-  ProcessorArchitectureOv = 'processor_architecture_ov',
-  ReliabilityOv = 'reliability_ov',
-  ReportTypesOv = 'report_types_ov',
-  RequestForInformationTypesOv = 'request_for_information_types_ov',
-  RequestForTakedownTypesOv = 'request_for_takedown_types_ov',
-  SecurityPlatformTypeOv = 'security_platform_type_ov',
-  ServiceStatusOv = 'service_status_ov',
-  ServiceTypeOv = 'service_type_ov',
-  StartTypeOv = 'start_type_ov',
-  ThreatActorGroupRoleOv = 'threat_actor_group_role_ov',
-  ThreatActorGroupSophisticationOv = 'threat_actor_group_sophistication_ov',
-  ThreatActorGroupTypeOv = 'threat_actor_group_type_ov',
-  ThreatActorIndividualRoleOv = 'threat_actor_individual_role_ov',
-  ThreatActorIndividualSophisticationOv = 'threat_actor_individual_sophistication_ov',
-  ThreatActorIndividualTypeOv = 'threat_actor_individual_type_ov',
-  ToolTypesOv = 'tool_types_ov'
-}
+export type VocabularyCategory =
+  | 'account_type_ov'
+  | 'attack_motivation_ov'
+  | 'attack_resource_level_ov'
+  | 'case_priority_ov'
+  | 'case_severity_ov'
+  | 'channel_types_ov'
+  | 'collection_layers_ov'
+  | 'event_type_ov'
+  | 'eye_color_ov'
+  | 'gender_ov'
+  | 'grouping_context_ov'
+  | 'hair_color_ov'
+  | 'implementation_language_ov'
+  | 'incident_response_types_ov'
+  | 'incident_severity_ov'
+  | 'incident_type_ov'
+  | 'indicator_type_ov'
+  | 'infrastructure_type_ov'
+  | 'integrity_level_ov'
+  | 'malware_capabilities_ov'
+  | 'malware_result_ov'
+  | 'malware_type_ov'
+  | 'marital_status_ov'
+  | 'note_types_ov'
+  | 'opinion_ov'
+  | 'organization_type_ov'
+  | 'pattern_type_ov'
+  | 'permissions_ov'
+  | 'persona_type_ov'
+  | 'platforms_ov'
+  | 'processor_architecture_ov'
+  | 'reliability_ov'
+  | 'report_types_ov'
+  | 'request_for_information_types_ov'
+  | 'request_for_takedown_types_ov'
+  | 'security_platform_type_ov'
+  | 'service_status_ov'
+  | 'service_type_ov'
+  | 'start_type_ov'
+  | 'threat_actor_group_role_ov'
+  | 'threat_actor_group_sophistication_ov'
+  | 'threat_actor_group_type_ov'
+  | 'threat_actor_individual_role_ov'
+  | 'threat_actor_individual_sophistication_ov'
+  | 'threat_actor_individual_type_ov'
+  | 'tool_types_ov';
 
 export type VocabularyConnection = {
   __typename?: 'VocabularyConnection';
@@ -31478,28 +31334,26 @@ export type VocabularyFieldDefinition = {
   required: Scalars['Boolean']['output'];
 };
 
-export enum VocabularyOrdering {
-  Score = '_score',
-  Category = 'category',
-  Description = 'description',
-  Name = 'name',
-  Order = 'order'
-}
+export type VocabularyOrdering =
+  | '_score'
+  | 'category'
+  | 'description'
+  | 'name'
+  | 'order';
 
-export enum VulnerabilitiesOrdering {
-  Score = '_score',
-  Confidence = 'confidence',
-  Created = 'created',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  Modified = 'modified',
-  Name = 'name',
-  UpdatedAt = 'updated_at',
-  XOpenctiCvssAttackVector = 'x_opencti_cvss_attack_vector',
-  XOpenctiCvssBaseScore = 'x_opencti_cvss_base_score',
-  XOpenctiCvssBaseSeverity = 'x_opencti_cvss_base_severity',
-  XOpenctiWorkflowId = 'x_opencti_workflow_id'
-}
+export type VulnerabilitiesOrdering =
+  | '_score'
+  | 'confidence'
+  | 'created'
+  | 'created_at'
+  | 'creator'
+  | 'modified'
+  | 'name'
+  | 'updated_at'
+  | 'x_opencti_cvss_attack_vector'
+  | 'x_opencti_cvss_base_score'
+  | 'x_opencti_cvss_base_severity'
+  | 'x_opencti_workflow_id';
 
 export type Vulnerability = BasicObject & StixCoreObject & StixDomainObject & StixObject & {
   __typename?: 'Vulnerability';
@@ -31929,11 +31783,10 @@ export type WidgetParameters = {
   title?: Maybe<Scalars['String']['output']>;
 };
 
-export enum WidgetPerspective {
-  Audits = 'audits',
-  Entities = 'entities',
-  Relationships = 'relationships'
-}
+export type WidgetPerspective =
+  | 'audits'
+  | 'entities'
+  | 'relationships';
 
 export type WindowsRegistryKey = BasicObject & StixCoreObject & StixCyberObservable & StixObject & {
   __typename?: 'WindowsRegistryKey';
@@ -32425,12 +32278,11 @@ export type WorkTracking = {
   import_processed_number?: Maybe<Scalars['Int']['output']>;
 };
 
-export enum WorksOrdering {
-  Score = '_score',
-  CreatedAt = 'created_at',
-  Status = 'status',
-  Timestamp = 'timestamp'
-}
+export type WorksOrdering =
+  | '_score'
+  | 'created_at'
+  | 'status'
+  | 'timestamp';
 
 export type Workspace = BasicObject & InternalObject & {
   __typename?: 'Workspace';
@@ -32504,13 +32356,12 @@ export type WorkspaceEdge = {
   node: Workspace;
 };
 
-export enum WorkspacesOrdering {
-  Score = '_score',
-  CreatedAt = 'created_at',
-  Creator = 'creator',
-  Name = 'name',
-  UpdatedAt = 'updated_at'
-}
+export type WorkspacesOrdering =
+  | '_score'
+  | 'created_at'
+  | 'creator'
+  | 'name'
+  | 'updated_at';
 
 export type X509Certificate = BasicObject & HashedObservable & StixCoreObject & StixCyberObservable & StixObject & {
   __typename?: 'X509Certificate';
@@ -32763,11 +32614,10 @@ export type X509CertificateAddInput = {
   version?: InputMaybe<Scalars['String']['input']>;
 };
 
-export enum XtmHubRegistrationStatus {
-  LostConnectivity = 'lost_connectivity',
-  Registered = 'registered',
-  Unregistered = 'unregistered'
-}
+export type XtmHubRegistrationStatus =
+  | 'lost_connectivity'
+  | 'registered'
+  | 'unregistered';
 
 export type AiBus_Simple = { bus_id: Scalars["String"]["output"]; content: Scalars["String"]["output"]; __typename: Scalars["String"]["output"] };
 
@@ -37433,16 +37283,109 @@ export interface BaseOpenCTIClient {
     workspaceWidgetConfigurationImport(args?: MutationWorkspaceWidgetConfigurationImportArgs): PromiseLike<Maybe<Workspace_All>>;
 }
 
-type OpNode = { d?: [number, number]; f?: number[]; n?: string; c?: Record<string, OpNode> };
+type OpNode = { doc?: [number, number]; fragments?: number[]; originalName?: string; children?: Record<string, OpNode> };
 
 const __dir = dirname(fileURLToPath(import.meta.url));
-const metadata: { f: [number, number][]; o: Record<string, OpNode> } = JSON.parse(readFileSync(join(__dir, "metadata.json"), "utf-8"));
+
+const nodesFd = openSync(join(__dir, "nodes.bin"), "r");
+const fragsFd = openSync(join(__dir, "fragments.bin"), "r");
 const stringsFd = openSync(join(__dir, "strings.bin"), "r");
 
-function readString(offset: number, length: number): string {
+const headerSizeBuf = Buffer.alloc(4);
+readSync(nodesFd, headerSizeBuf, 0, 4, 0);
+const nodesHeaderSize = headerSizeBuf.readUInt32LE(0);
+const nodesHeader = Buffer.alloc(nodesHeaderSize);
+readSync(nodesFd, nodesHeader, 0, nodesHeaderSize, 4);
+const nodesHeaderView = new DataView(nodesHeader.buffer, nodesHeader.byteOffset, nodesHeader.byteLength);
+
+const stringCache = new Map<number, string>();
+
+function getString(offset: number, length: number): string {
+    let s = stringCache.get(offset);
+    if (s !== undefined) return s;
     const buf = Buffer.alloc(length);
     readSync(stringsFd, buf, 0, length, offset);
-    return buf.toString("utf-8");
+    s = buf.toString("utf-8");
+    stringCache.set(offset, s);
+    return s;
+}
+
+function getFragment(id: number): string {
+    const fb = Buffer.alloc(8);
+    readSync(fragsFd, fb, 0, 8, id * 8);
+    return getString(fb.readUInt32LE(0), fb.readUInt32LE(4));
+}
+
+function lookupNode(name: string): [number, number] | undefined {
+    let pos = 0;
+    while (pos < nodesHeader.length) {
+        const keyLen = nodesHeader[pos];
+        if (keyLen === name.length) {
+            let match = true;
+            for (let j = 0; j < keyLen; j++) {
+                if (nodesHeader[pos + 1 + j] !== name.charCodeAt(j)) { match = false; break; }
+            }
+            if (match) {
+                const off = nodesHeaderView.getUint32(pos + 1 + keyLen, true);
+                const len = nodesHeaderView.getUint32(pos + 1 + keyLen + 4, true);
+                return [off, len];
+            }
+        }
+        pos += 1 + keyLen + 4 + 4;
+    }
+    return undefined;
+}
+
+const opCache = new Map<string, OpNode>();
+
+function decodeNodeAt(buf: Buffer, pos: number): { node: OpNode; end: number } {
+    const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength);
+    const flags = buf[pos++];
+    const node: OpNode = {};
+
+    if (flags & 1) {
+        node.doc = [view.getUint32(pos, true), view.getUint32(pos + 4, true)];
+        pos += 8;
+    }
+    if (flags & 2) {
+        const count = view.getUint16(pos, true);
+        pos += 2;
+        node.fragments = [];
+        for (let i = 0; i < count; i++) {
+            node.fragments.push(view.getUint16(pos, true));
+            pos += 2;
+        }
+    }
+    if (flags & 4) {
+        const nLen = buf[pos++];
+        node.originalName = buf.toString("utf-8", pos, pos + nLen);
+        pos += nLen;
+    }
+    if (flags & 8) {
+        const childCount = buf[pos++];
+        node.children = {};
+        for (let i = 0; i < childCount; i++) {
+            const keyLen = buf[pos++];
+            const key = buf.toString("utf-8", pos, pos + keyLen);
+            pos += keyLen;
+            const child = decodeNodeAt(buf, pos);
+            node.children[key] = child.node;
+            pos = child.end;
+        }
+    }
+    return { node, end: pos };
+}
+
+function getOperation(name: string): OpNode | undefined {
+    let node = opCache.get(name);
+    if (node) return node;
+    const entry = lookupNode(name);
+    if (!entry) return undefined;
+    const buf = Buffer.alloc(entry[1]);
+    readSync(nodesFd, buf, 0, entry[1], entry[0]);
+    node = decodeNodeAt(buf, 0).node;
+    opCache.set(name, node);
+    return node;
 }
 
 export class BaseOpenCTIClient {
@@ -37450,7 +37393,6 @@ export class BaseOpenCTIClient {
     protected apiKey: string;
 
     private endpoint: string;
-    private resolvedDocuments = new Map<number, string>();
 
     constructor(host: string, apiKey: string) {
         const url = new URL("/graphql", host);
@@ -37460,10 +37402,12 @@ export class BaseOpenCTIClient {
 
         return new Proxy(this, {
             get(target, prop, receiver) {
-                if (typeof prop === "string" && prop in metadata.o) {
-                    const meta = metadata.o[prop];
-                    const field = meta.n ?? prop;
-                    return (args?: any) => target._chainable(meta, [field], target._mapVars(field, args));
+                if (typeof prop === "string") {
+                    const meta = getOperation(prop);
+                    if (meta) {
+                        const field = meta.originalName ?? prop;
+                        return (args?: any) => target._chainable(meta, [field], target._mapVars(field, args));
+                    }
                 }
                 return Reflect.get(target, prop, receiver);
             },
@@ -37483,7 +37427,7 @@ export class BaseOpenCTIClient {
     private _chainable(meta: OpNode, path: string[], vars: Record<string, any>): any {
         const self = this;
 
-        if (!meta.c && meta.d) {
+        if (!meta.children && meta.doc !== undefined) {
             return {
                 then(resolve: any, reject: any) {
                     return self._exec(meta, path, vars).then(resolve, reject);
@@ -37493,15 +37437,15 @@ export class BaseOpenCTIClient {
 
         return new Proxy(
             {
-                then: meta.d
+                then: meta.doc !== undefined
                     ? (resolve: any, reject: any) => self._exec(meta, path, vars).then(resolve, reject)
                     : undefined,
             },
             {
                 get(target, prop) {
                     if (prop === "then") return target.then;
-                    if (typeof prop === "string" && meta.c && prop in meta.c) {
-                        const child = meta.c[prop];
+                    if (typeof prop === "string" && meta.children && prop in meta.children) {
+                        const child = meta.children[prop];
                         return (childArgs?: any) => {
                             return self._chainable(child, [...path, prop], { ...vars, ...self._mapVars(prop, childArgs) });
                         };
@@ -37513,7 +37457,7 @@ export class BaseOpenCTIClient {
     }
 
     private async _exec(meta: OpNode, path: string[], vars: Record<string, any>) {
-        const query = this.getResolvedDocument(meta);
+        const query = this._buildQuery(meta);
         const extracted = this._extractFiles(vars);
 
         let res: Response;
@@ -37557,21 +37501,14 @@ export class BaseOpenCTIClient {
         return data;
     }
 
-    private getResolvedDocument(meta: OpNode): string {
-        const [offset, length] = meta.d!;
-        let resolved = this.resolvedDocuments.get(offset);
-        if (!resolved) {
-            const parts = [readString(offset, length)];
-            if (meta.f) {
-                for (const id of meta.f) {
-                    const [fOff, fLen] = metadata.f[id];
-                    parts.push(readString(fOff, fLen));
-                }
+    private _buildQuery(meta: OpNode): string {
+        const parts = [getString(meta.doc![0], meta.doc![1])];
+        if (meta.fragments) {
+            for (const id of meta.fragments) {
+                parts.push(getFragment(id));
             }
-            resolved = parts.join("\n");
-            this.resolvedDocuments.set(offset, resolved);
         }
-        return resolved;
+        return parts.join("\n");
     }
 
     private _extractFiles(variables: Record<string, any>): { vars: Record<string, any>; files: Map<string, Blob> } | null {

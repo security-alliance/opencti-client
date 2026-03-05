@@ -1,4 +1,4 @@
-import { Identifier, StixObject, StixObjectType, StixObjectTypeMap } from "@security-alliance/stix/2.1";
+import { Identifier, StixObject } from "@security-alliance/stix/2.1";
 import type { Operation } from "fast-json-patch";
 
 // The server uses Partial<UserOrigin> for all events. User-initiated events
@@ -82,9 +82,9 @@ export type StateUpdateEvent =
     | { lastEventId: string; updateType: "delete"; body: DeleteEvent }
     | { lastEventId: string; updateType: "merge"; body: MergeEvent };
 
-export type OpenCTIStreamOptions = {
+export type OpenCTIStreamOptions<T = StixObject> = {
     signal?: AbortSignal;
-    state?: OpenCTIStreamStateManager;
+    state?: OpenCTIStreamStateManager<T>;
     noDependencies?: boolean;
     noDelete?: boolean;
     withInferences?: boolean;
@@ -92,13 +92,13 @@ export type OpenCTIStreamOptions = {
     authorization?: string;
 };
 
-export interface OpenCTIStreamStateManager {
+export interface OpenCTIStreamStateManager<T = StixObject> {
     initialize(): Promise<void>;
 
     getLastEventId(): string;
 
-    getObjects(): Record<Identifier, StixObject>;
-    getObject<T extends StixObjectType>(id: Identifier<T>): StixObjectTypeMap[T] | undefined;
+    getObjects(): Record<Identifier, T>;
+    getObject(id: Identifier): T | undefined;
 
     updateState(events: StateUpdateEvent[]): Promise<void>;
     replaceState(objects: Record<Identifier, StixObject>, lastEventId: string): Promise<void>;

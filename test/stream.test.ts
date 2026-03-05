@@ -183,7 +183,8 @@ describe("Stream resync", { timeout: 180_000 }, () => {
 
             const countBefore = Object.keys(stream.stateObjects).length;
 
-            await stream.resync();
+            stream.resync();
+            await new Promise((r) => setTimeout(r, 10));
             await waitForReady(stream);
 
             const countAfter = Object.keys(stream.stateObjects).length;
