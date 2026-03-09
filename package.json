@@ -23,7 +23,7 @@
     },
     "repository": "github:security-alliance/opencti-client",
     "scripts": {
-        "build": "rm -rf dist/; tsc -p tsconfig.release.json && cp src/generated/*.bin dist/generated/",
+        "build": "tsc -p tsconfig.release.json && cp src/generated/*.bin dist/generated/",
         "test": "mocha",
         "generate": "node --import tsx scripts/generate-opencti-client.ts",
         "prepublishOnly": "pnpm run build",
